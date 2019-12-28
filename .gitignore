@@ -1,1 +1,3 @@
 /target/
+/led.properties
+/serialsoc.py

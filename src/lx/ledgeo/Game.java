@@ -5,6 +5,14 @@ public class Game
 	private Player player;
 	private Map map;
 	
+	public boolean binIchDemBoden()
+	{
+		if(map.getLevel(player.getPosiX(), player.getPosiY()-1) == 3)
+		{
+			return true;
+		}
+		return false;
+	}
 	public boolean binIchTot()
 	{
 		for(int i = 0;i<player.getScale();i++)
@@ -46,4 +54,5 @@ public class Game
 			player.setScale(3);
 		}
 	}
+	
 }

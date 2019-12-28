@@ -11,10 +11,12 @@ public abstract class BasicDrawable implements Drawable {
 	
 	@Override
 	public boolean draw(DrawingArea a) {
+		if (!this.visible)
+			return false;
 		if (backgroundColor != null)	{
 			a.fill(backgroundColor);
 		}
-		return this.visible;
+		return true;
 	}
 	
 	public void setPosition(int x,int y)	{

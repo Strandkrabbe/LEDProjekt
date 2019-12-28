@@ -1,0 +1,5 @@
+module LEDProjekt {
+	
+	requires LEDDriverJ;
+	
+}

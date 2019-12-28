@@ -34,7 +34,7 @@ public class Main {
 			{{},	{},		{},		{},		{},		{},		{},		{},		{},		{},		{},		{},		{},		{},		{},		{},		{},		{}},
 			{{},	{},		{},		{},		{},		{},		{},		{},		blu,	yel,	blu,	{},		{},		{},		{},		{},		red,	{}},
 			{blu,	blu,	{},		{},		{},		red,	{},		{},		yel,	gre,	yel,	{},		{},		red,	{},		red,	ora,	red},
-			{blu,	blu,	{},		{},		red,	ora	,	red,	{},		blu,	yel,	blu,	{},		red,	ora,	red,	red,	red,	red},
+			{blu,	gre,	{},		{},		red,	ora	,	red,	{},		blu,	yel,	blu,	{},		red,	ora,	red,	red,	red,	red},
 			}
 	;
 	

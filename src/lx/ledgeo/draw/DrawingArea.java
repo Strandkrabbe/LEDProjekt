@@ -85,6 +85,21 @@ public class DrawingArea {
 			}
 		}
 	}
-	
+	public void drawInverse(int[][][] toInverse) {
+		if (this.area.length == toInverse.length) {
+			if(this.area[0].length == toInverse[0].length) {
+				for(int i = 0; i < toInverse.length; i++) {
+					for(int j = 0; j < toInverse[i].length; j++) {
+						area[toInverse.length-i-1][j]=toInverse[i][j];
+					}
+				}
+			}
+			else {
+				return;
+			}
+			} else {
+				return;
+		}
+	}
 	// Draw text
 }

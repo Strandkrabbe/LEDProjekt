@@ -7,7 +7,7 @@ public class Map
 // 0 Nichts  0 0 0
 // 1 Spieler 0 0 255
 // 2 Spike 	 255 0 0
-// 3 Block	 0 255 0
+// 3 Block	 0 255 0 
 // -1 Jump	 255 165 0
 // -2 Scale 1 0 0 20
 // -3 Scale 2 0 0 40

@@ -1,5 +1,15 @@
 package lx.ledgeo;
 
-public class Map {
+import java.io.File;
+
+public class Map 
+{
+private int level[][];
+public void loadMap(File f)
+{
+	
+}
+
+
 
 }

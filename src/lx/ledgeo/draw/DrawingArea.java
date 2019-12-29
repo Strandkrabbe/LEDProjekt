@@ -94,12 +94,24 @@ public class DrawingArea {
 					}
 				}
 			}
-			else {
-				return;
-			}
-			} else {
-				return;
 		}
+	}
+	public void draw(Drawable d)	{
+		DrawingArea da = new DrawingArea(d.getWidth(), d.getHeight());
+		boolean vis = d.draw(da);
+		if (vis)
+			this.draw(da.area, d.getX(), d.getY());
+	}
+	/**
+	 * <b>!!Draws only full sized drawables!!</b><br>
+	 * x=0,y=0
+	 * @param d
+	 */
+	public void drawInverse(Drawable d)	{
+		DrawingArea da = new DrawingArea(d.getWidth(), d.getHeight());
+		boolean vis = d.draw(da);
+		if (vis)
+			this.drawInverse(da.area);
 	}
 	// Draw text
 }

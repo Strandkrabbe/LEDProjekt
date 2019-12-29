@@ -1,6 +1,5 @@
 package lx.ledgeo;
 
-import java.io.File;
 import java.io.IOException;
 
 import henning.leddriverj.util.Log;
@@ -46,18 +45,22 @@ public class Map extends BasicDrawable {
 		this.setBackgrounColor(null);
 	}
 
-	public void loadMap(File f) {
+	public void loadMap(String name) {
 		try {
-			this.level = MapUtil.loadFromFile(f);
+			this.level = MapUtil.loadMap(name);
 		} catch (IOException e) {
 			this.level = null;
-			Log.error("No map found at " + f.toString(), "Map");
+			Log.error("No map found at /lx/ledgeo/maps/" + name.toString() + ".png", "Map");
 			Log.error(e);
 		}
 	}
 
-	public int getLevel(int x, int b) {
-		return level[x][b];
+	public int getLevel(int x, int y) {
+		return level[y][x];
+	}
+	
+	public boolean isMapLoaded()	{
+		return this.level != null;
 	}
 	
 	@Override
@@ -72,7 +75,7 @@ public class Map extends BasicDrawable {
 				for (int X = 0;X < this.getWidth();X++)	{
 					int blocktype = this.level[Y + currentYPos][X + currentXPos];
 					int[] color;
-					switch (blocktype) {
+					switch (blocktype) {		// Time based annimations here TODO
 					case 0:
 						color = new int[] {0,0,0};
 						break;

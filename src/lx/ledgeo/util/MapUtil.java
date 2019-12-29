@@ -49,6 +49,14 @@ public class MapUtil {
 			return null;
 		}
 	}
+	public static int[][] loadMap(String mapName)	throws IOException	{
+		InputStream ios = MapUtil.class.getResourceAsStream("/lx/ledgeo/maps/" + mapName + ".png");
+		if (ios != null)	{
+			return loadFromFile(ios);
+		}	else	{
+			throw new IOException("Unable to locate map");
+		}
+	}
 	
 	public static int getType(BufferedImage img,int x,int y)	{
 		int rgbv = img.getRGB(x, y);

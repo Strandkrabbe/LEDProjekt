@@ -120,4 +120,20 @@ public class Map extends BasicDrawable {
 		return ColorMode.REPLACE_NONEZERO;
 	}
 
+	public int getCurrentXPos() {
+		return currentXPos;
+	}
+
+	public void setCurrentXPos(int currentXPos) {
+		this.currentXPos = currentXPos;
+	}
+
+	public int getCurrentYPos() {
+		return currentYPos;
+	}
+
+	public void setCurrentYPos(int currentYPos) {
+		this.currentYPos = currentYPos;
+	}
+
 }

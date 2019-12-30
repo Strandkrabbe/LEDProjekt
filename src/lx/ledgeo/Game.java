@@ -108,6 +108,7 @@ public class Game extends Container {
 			tmpVelY -= comp;
 		}
 		exactPlayerX += velocityX;
+		
 		return true;
 	}
 

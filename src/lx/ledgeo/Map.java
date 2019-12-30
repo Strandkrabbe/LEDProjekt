@@ -73,6 +73,10 @@ public class Map extends BasicDrawable {
 		if (this.level != null)	{
 			for (int Y = 0;Y < this.getHeight();Y++)	{
 				for (int X = 0;X < this.getWidth();X++)	{
+					int levelx = X + currentXPos;
+					int levely = Y + currentYPos;
+					if (levelx < 0 || levely < 0)
+						continue;
 					int blocktype = this.level[Y + currentYPos][X + currentXPos];
 					int[] color;
 					switch (blocktype) {		// Time based annimations here TODO

@@ -4,43 +4,26 @@ import lx.ledgeo.draw.BasicDrawable;
 import lx.ledgeo.draw.DrawingArea;
 
 public class Player extends BasicDrawable {
-	private static final int[] blu = { 0, 0, 255 };
-	private static final int[][][] DEFAULT_SKIN = {
-			// TODO
-	};
-
-//	private int posiX = 4;
-//	private int posiY = 1;
 
 	private int scale = 2;
-	private int[][][] skin;
-	private int njump = 2;
 	
-	public Player()	{
-		
+	private Skin skin;
+	
+	public Player(Skin s)	{
+		this.skin = s;
 	}
-
-//	public int getPosiX() {		// Doubled by position attributes of BasicDrawable
-//		return posiX;
-//	}
-//
-//	public void setPosiX(int posiX) {
-//		this.posiX = posiX;
-//	}
-//
-//	public int getPosiY() {
-//		return posiY;
-//	}
-//
-//	public void setPosiY(int posiY) {
-//		this.posiY = posiY;
-//	}
+	public Player()	{
+		this(Skin.getDefaultSkin());
+	}
 
 	public int getScale() {
 		return scale;
 	}
 	public void setScale(int scale) {
 		this.scale = scale;
+	}
+	public void setSkin(Skin s)	{
+		this.skin = s;
 	}
 	
 	@Override
@@ -56,6 +39,7 @@ public class Player extends BasicDrawable {
 	public boolean draw(DrawingArea a) {
 		if (!super.draw(a))
 			return false;
+		a.draw(skin.getAnimatedSkin(), 0, 0);
 		return true;
 	}
 

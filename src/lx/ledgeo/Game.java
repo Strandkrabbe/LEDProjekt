@@ -1,5 +1,6 @@
 package lx.ledgeo;
 
+import henning.leddriverj.util.Log;
 import lx.ledgeo.draw.Container;
 import lx.ledgeo.draw.DrawingArea;
 
@@ -10,7 +11,8 @@ public class Game extends Container {
 	public static final double ACCELERATION_GRAVITY = -0.2;
 	public static final double VELOCITY_JUMP = 1.0;
 	public static final double VELOCITY_JUMP_LONG = 1.2;
-	public static final double VELOCITY_LIMIT = 2.0;
+	public static final double VELOCITY_LIMIT_ABS = 2.0;
+	public static final long TICK_DURATION = 250;
 	
 	private Player player;
 	private Map map;
@@ -29,6 +31,17 @@ public class Game extends Container {
 		this.setSize(GAME_WIDTH, GAME_HEIGHT);
 		this.add(map);
 		this.add(player);
+		this.setVisible(false);
+		this.reset();
+	}
+	private void reset()	{
+		this.exactPlayerX = 0.0;
+		this.exactPlayerY = 0.0;
+		this.velocityX = 0.5;
+		this.velocityY = 0.0;
+		this.applyVelocityY = Double.NaN;
+		this.running = false;
+		this.gravity = ACCELERATION_GRAVITY;
 	}
 	
 	public void loadMap(String s)	{
@@ -91,6 +104,7 @@ public class Game extends Container {
 	private void applyVelocityChanges()	{
 		if (!Double.isNaN(applyVelocityY))	{
 			this.velocityY = applyVelocityY;
+			this.applyVelocityY = Double.NaN;
 		}
 	}
 	private void newVelocity(double d)	{	// This might be less realistic then adding velocities but more predictable for us and the player
@@ -110,17 +124,17 @@ public class Game extends Container {
 		if (!onGround(exactPlayerX, exactPlayerY))	{
 			this.velocityY += this.gravity;
 		}
-		if (this.velocityY > VELOCITY_LIMIT)	{
-			this.velocityY = VELOCITY_LIMIT;
+		if (this.velocityY > VELOCITY_LIMIT_ABS)	{
+			this.velocityY = VELOCITY_LIMIT_ABS;
 		}
-		if (this.velocityY < VELOCITY_LIMIT * -1.0)	{
-			this.velocityY = VELOCITY_LIMIT * -1.0;
+		if (this.velocityY < VELOCITY_LIMIT_ABS * -1.0)	{
+			this.velocityY = VELOCITY_LIMIT_ABS * -1.0;
 		}
-		if (this.velocityX > VELOCITY_LIMIT)	{	// -- Not needed yet but eventually later
-			this.velocityX = VELOCITY_LIMIT;
+		if (this.velocityX > VELOCITY_LIMIT_ABS)	{	// -- Not needed yet but eventually later
+			this.velocityX = VELOCITY_LIMIT_ABS;
 		}
-		if (this.velocityX < VELOCITY_LIMIT * -1.0)	{
-			this.velocityX = VELOCITY_LIMIT * -1.0;	// --
+		if (this.velocityX < VELOCITY_LIMIT_ABS * -1.0)	{
+			this.velocityX = VELOCITY_LIMIT_ABS * -1.0;	// --
 		}
 		double tmpVelY = velocityY;
 		boolean negative = tmpVelY < 0;
@@ -165,17 +179,50 @@ public class Game extends Container {
 	
 	@Override
 	public synchronized boolean draw(DrawingArea a) {
-		this.map.setCurrentXPos(xToInt(exactPlayerX + 5));
-		this.map.setCurrentYPos(Math.max(yToInt(exactPlayerY) - 5,0));
-		this.player.setPosition(xToInt(exactPlayerX) - this.map.getCurrentXPos(), yToInt(exactPlayerY) - map.getCurrentYPos());
+		int X = xToInt(exactPlayerX);
+		int Y = yToInt(exactPlayerY);
+		this.map.setCurrentXPos(X + 5);
+		this.map.setCurrentYPos(Math.max(Y - 5,0));
+		this.player.setPosition(X - this.map.getCurrentXPos(),Y - map.getCurrentYPos());
 		return super.draw(a);
 	}
 	
-	public void start()	{
-		
+	public void start(String mapName,Skin skin)	{
+		this.map.loadMap(mapName);
+		this.player.setSkin(skin);
+		this.reset();
+		this.setVisible(true);
+		if (!this.map.isMapLoaded())	{
+			try {
+				Thread.sleep(7500);
+			} catch (InterruptedException e) {}
+		}	else	{
+			run();
+		}
 	}
 	public void run()	{	// Run method (main method of game)
-		
+		this.running = true;
+		this.player.setVisible(true);
+		while (running)	{
+			if (!this.move())	{
+				this.running = false;
+				this.player.setVisible(false);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {}
+				// TODO Endscreen here
+			}
+			try {
+				Thread.sleep(TICK_DURATION);
+			} catch (InterruptedException e) {
+				Log.error("Game interrupted");
+				this.running = false;
+				return;
+			}
+		}
+	}
+	public void stop()	{
+		this.running = false;
 	}
 
 }

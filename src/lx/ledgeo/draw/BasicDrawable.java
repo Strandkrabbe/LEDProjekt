@@ -9,6 +9,10 @@ public abstract class BasicDrawable implements Drawable {
 	private int[] backgroundColor = null;
 	private boolean visible;
 	
+	public BasicDrawable()	{
+		this.visible = true;
+	}
+	
 	@Override
 	public boolean draw(DrawingArea a) {
 		if (!this.visible)

@@ -12,18 +12,19 @@ import javax.imageio.ImageIO;
 import henning.leddriverj.util.Log;
 
 public class MapUtil {
-	
+	// TODO Add ramp blue
 	public static final int[] COLOR_NONE = {0,0,0,0};	//: 0
 	public static final int[] COLOR_SOLID = {0,255,0,3}; //: 3
 	public static final int[] COLOR_SPIKE = {255,0,0,2}; //: 2
-	public static final int[] COLOR_INVALID_SOLID = {255,255,0,3};
+	public static final int[] COLOR_INVALID_SOLID = {255,255,0,4};
 	public static final int[] COLOR_JUMP = {255,165,0,-1}; //: -1
 	public static final int[] COLOR_SCALE1 = {0,0,20,-2}; //: -2
 	public static final int[] COLOR_SCALE2 = {0,0,40,-3}; //: -3
 	public static final int[] COLOR_SCALE3 = {0,0,60,-4}; //: -4
+	public static final int[] COLOR_FINISH = {20,0,0,Integer.MIN_VALUE};
 	public static final int[][] COLORS_MAP;
 	static	{
-		COLORS_MAP = new int[][] {COLOR_NONE,COLOR_SOLID,COLOR_SPIKE,COLOR_JUMP,COLOR_SCALE1,COLOR_SCALE2,COLOR_SCALE3};
+		COLORS_MAP = new int[][] {COLOR_NONE,COLOR_SOLID,COLOR_SPIKE,COLOR_JUMP,COLOR_SCALE1,COLOR_SCALE2,COLOR_SCALE3,COLOR_FINISH};
 	}
 	
 	public static int[][] loadFromFile(InputStream i) throws IOException	{
@@ -62,8 +63,8 @@ public class MapUtil {
 		int rgbv = img.getRGB(x, y);
 		int[] rgb = new int[3];
 		rgb[2] = rgbv & 0xFF;
-		rgb[1] = rgbv & (0xFF << 8);
-		rgb[0] = rgbv & (0xFF << 16);
+		rgb[1] = (rgbv >> 8) & 0xFF;
+		rgb[0] = (rgbv >> 16) & 0xFF;
 		for (int C = 0;C < COLORS_MAP.length;C++)	{
 			if (matches(rgb, COLORS_MAP[C]))	{
 				return COLORS_MAP[C][3];

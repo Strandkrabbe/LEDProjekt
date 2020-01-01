@@ -28,10 +28,12 @@ public class Map extends BasicDrawable {
 	private int[] color_solid = {0,255,0};
 	private int[] color_spike = {255,0,0};
 	private int[] color_playerblock = {0,0,255}; // Was is das??
-	private int[] color_jump = {255,265,0};
+	private int[] color_jump = {255,225,0};
 	private int[] color_scale1 = {10,250,180};
 	private int[] color_scale2 = {10,250,180};
 	private int[] color_scale3 = {10,250,180};
+	
+	private int[] color_finish = {255,255,255};
 	
 	public Map()	{
 		this.noMapImg = new Image();
@@ -56,11 +58,22 @@ public class Map extends BasicDrawable {
 	}
 
 	public int getLevel(int x, int y) {
-		return level[y][x];
+		if (y < 0 || y >= this.level.length)
+			return 2;
+		int[] row = level[y];
+		if (x < 0)
+			return 0;
+		if (x >= row.length)
+			return Integer.MIN_VALUE;
+		return row[x];
 	}
 	
 	public boolean isMapLoaded()	{
 		return this.level != null;
+	}
+	
+	public int getFinishX()	{
+		return this.level[0].length;
 	}
 	
 	@Override
@@ -75,9 +88,14 @@ public class Map extends BasicDrawable {
 				for (int X = 0;X < this.getWidth();X++)	{
 					int levelx = X + currentXPos;
 					int levely = Y + currentYPos;
-					if (levelx < 0 || levely < 0)
+					if (levelx < 0 || levely < 0 || levely >= this.level.length)
 						continue;
-					int blocktype = this.level[Y + currentYPos][X + currentXPos];
+					int blocktype;
+					if (levelx >= this.level[0].length)	{
+						blocktype = Integer.MIN_VALUE;
+					}	else	{
+						blocktype = this.level[Y + currentYPos][X + currentXPos];
+					}
 					int[] color;
 					switch (blocktype) {		// Time based annimations here TODO
 					case 0:
@@ -103,6 +121,9 @@ public class Map extends BasicDrawable {
 						break;
 					case -4:
 						color = color_scale3;
+						break;
+					case Integer.MIN_VALUE:
+						color = color_finish;
 						break;
 					default:
 						color = new int[] {255,255,0};

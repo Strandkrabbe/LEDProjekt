@@ -1,18 +1,26 @@
 package lx.ledgeo;
 
+import java.awt.event.KeyEvent;
+
 import henning.leddriverj.util.Log;
 import lx.ledgeo.draw.Container;
 import lx.ledgeo.draw.DrawingArea;
+import lx.ledgeo.input.InputProvider;
+import lx.ledgeo.util.ArrayUtils;
 
 public class Game extends Container {
 	
 	public static final int GAME_WIDTH = 18;
 	public static final int GAME_HEIGHT = 10;
-	public static final double ACCELERATION_GRAVITY = -0.2;
-	public static final double VELOCITY_JUMP = 1.0;
-	public static final double VELOCITY_JUMP_LONG = 1.2;
-	public static final double VELOCITY_LIMIT_ABS = 2.0;
-	public static final long TICK_DURATION = 250;
+	public static final double ACCELERATION_GRAVITY = -0.35;
+	public static final double VELOCITY_JUMP = 1.6;
+	public static final double VELOCITY_JUMP_LONG = 1.85;
+	public static final double VELOCITY_LIMIT_ABS = 2.5;
+	public static final long TICK_DURATION = 150;
+	
+	public static final byte RETURN_RUN = 0;
+	public static final byte RETURN_DEAD = 1;
+	public static final byte RETURN_FINISH = 2;
 	
 	private Player player;
 	private Map map;
@@ -22,6 +30,7 @@ public class Game extends Container {
 	private double velocityY = 0.0;
 	private double applyVelocityY = Double.NaN;
 	private double gravity = ACCELERATION_GRAVITY;
+	private InputProvider input;
 	private boolean running = false;
 	
 	public Game()	{
@@ -36,7 +45,7 @@ public class Game extends Container {
 	}
 	private void reset()	{
 		this.exactPlayerX = 0.0;
-		this.exactPlayerY = 0.0;
+		this.exactPlayerY = 1.0;
 		this.velocityX = 0.5;
 		this.velocityY = 0.0;
 		this.applyVelocityY = Double.NaN;
@@ -58,11 +67,35 @@ public class Game extends Container {
 	private int yToInt(double y)	{
 		return (int) y;
 	}
+	
+	@SuppressWarnings("unused")
+	private int xToInt(double x,boolean up)	{
+		if (up)	{
+			return (int) Math.ceil(x);
+		}	else	{
+			return (int) x;
+		}
+	}
+	
+	@SuppressWarnings("unused")
+	private int yToInt(double y,boolean up)	{
+		if (up)	{
+			return (int) Math.ceil(y);
+		}	else	{
+			return (int) y;
+		}
+	}
 
 	boolean onGround(double x,double y) {
-		if (map.getLevel(xToInt(x),yToInt(x) + ((int)Math.signum(this.gravity))) == 3) {
+		if (y < 1.0)
 			return true;
+		for (int XA = 0;XA < this.player.getScale();XA++)	{
+			int type = map.getLevel(xToInt(x,false) + XA,yToInt(y) + ((gravity < 0) ? -1 : this.player.getScale()));
+			if (type != 0 && type != 2) {
+				return true;
+			}
 		}
+//		return map.getLevel(xToInt(x,true) + this.player.getScale() - 1,yToInt(x) + gravity < 0 ? -1 : this.player.getScale()) == 3;
 		return false;
 	}
 
@@ -78,11 +111,16 @@ public class Game extends Container {
 		}
 		return false;
 	}
+	boolean isFinished(double x,double y)	{
+		int PX = xToInt(exactPlayerX) + this.player.getScale() - 1;
+		int PY = yToInt(exactPlayerY);
+		return PX >= this.map.getFinishX() || this.map.getLevel(PX, PY) == Integer.MIN_VALUE;
+	}
 
 	void bigJump() {
 		int X = xToInt(exactPlayerX);
 		int Y = yToInt(exactPlayerY);
-		if (map.getLevel(X, Y - 1) == -1) {
+		if (map.getLevel(X, Y - 1) == -1 || map.getLevel(X, Y) == -1) {
 			if (gravity < 0)	{
 				this.newVelocity(VELOCITY_JUMP_LONG);
 			}	else	{
@@ -120,7 +158,7 @@ public class Game extends Container {
 	/**
 	 * @return true if successful, false if dead
 	 */
-	public boolean move()	{
+	public byte move()	{
 		if (!onGround(exactPlayerX, exactPlayerY))	{
 			this.velocityY += this.gravity;
 		}
@@ -139,17 +177,21 @@ public class Game extends Container {
 		double tmpVelY = velocityY;
 		boolean negative = tmpVelY < 0;
 		tmpVelY = Math.abs(tmpVelY);
-		while (tmpVelY > 0.9)	{	// Prevent glitching by skipping more then 1.0 blocks -> calculate every block move
+		do	{	// Prevent glitching by skipping more then 1.0 blocks -> calculate every block move
 									// 0.9 to prevent rounding issues
 									// !!! A block might be computed twice !!!
 			this.bigJump();
 			this.changeSize();
 			if (isDead(exactPlayerX,exactPlayerY))	{
-				return false;
+				return RETURN_DEAD;
+			}
+			if (isFinished(exactPlayerX, exactPlayerY))	{
+				return RETURN_FINISH;
 			}
 			double comp = Math.min(0.9, tmpVelY);
 			if (onGround(exactPlayerX,exactPlayerY) && ((negative && gravity < 0) || !negative && gravity > 0))	{
 				tmpVelY = 0.0;
+				comp = 0.0;
 				this.velocityY = 0.0;
 				exactPlayerY = ((int) exactPlayerY);	// Ensure player is not floating f.e. 0.5 above ground
 			}
@@ -158,11 +200,11 @@ public class Game extends Container {
 			else
 				exactPlayerY += comp;
 			tmpVelY -= comp;
-		}
+		} while (tmpVelY > 0.9);
 		exactPlayerX += velocityX;	// If it causes problems we might want to calculate new x in more steps by dividing it up for every step in
 									// y calculation
 		this.applyVelocityChanges();
-		return true;
+		return RETURN_RUN;
 	}
 
 	void changeSize() {
@@ -181,13 +223,20 @@ public class Game extends Container {
 	public synchronized boolean draw(DrawingArea a) {
 		int X = xToInt(exactPlayerX);
 		int Y = yToInt(exactPlayerY);
-		this.map.setCurrentXPos(X + 5);
+		this.map.setCurrentXPos(X - 4);
 		this.map.setCurrentYPos(Math.max(Y - 5,0));
 		this.player.setPosition(X - this.map.getCurrentXPos(),Y - map.getCurrentYPos());
-		return super.draw(a);
+		boolean vis = super.draw(a);
+		if (!vis)
+			return false;
+		int[][][] buffer = ArrayUtils.copy3(a.getArea());
+		a.drawInverse(buffer);
+		return true;
 	}
 	
-	public void start(String mapName,Skin skin)	{
+	public void start(String mapName,Skin skin,InputProvider in)	{
+		Log.info("Starting game...", "Game");
+		this.input = in;
 		this.map.loadMap(mapName);
 		this.player.setSkin(skin);
 		this.reset();
@@ -200,18 +249,41 @@ public class Game extends Container {
 			run();
 		}
 	}
-	public void run()	{	// Run method (main method of game)
+	private void run()	{	// Run method (main method of game)
+		Log.debug("Executing loop...", "Game");
 		this.running = true;
 		this.player.setVisible(true);
 		while (running)	{
-			if (!this.move())	{
+			while (this.input.hasKey())	{
+				int nk = this.input.getLastKey();
+				if (nk == KeyEvent.VK_UP || nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_W)	{
+					this.jump();
+				}
+				if (nk == KeyEvent.VK_ESCAPE)	{
+					this.running = false;
+					Log.info("Game stopped: ESC", "Game");
+				}
+			}
+			byte re = this.move();
+			if (re == RETURN_DEAD)	{
 				this.running = false;
 				this.player.setVisible(false);
+				Log.info("Game neded: DEAD", "Game");
+				// TODO Enable endscreen here
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {}
-				// TODO Endscreen here
 			}
+			if (re == RETURN_FINISH)	{
+				this.running = false;
+				this.player.setVisible(false);
+				Log.info("Game ended: FINISH", "Game");
+				// TODO enable endscreen 2 here
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {}
+			}
+			Main.draw();
 			try {
 				Thread.sleep(TICK_DURATION);
 			} catch (InterruptedException e) {
@@ -220,8 +292,11 @@ public class Game extends Container {
 				return;
 			}
 		}
+		this.setVisible(false);
+		Log.debug("Exiting loop", "Game");
 	}
 	public void stop()	{
+		Log.info("Game ended: PROG_STOP", "Game");
 		this.running = false;
 	}
 

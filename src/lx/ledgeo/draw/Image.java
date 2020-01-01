@@ -28,8 +28,8 @@ public class Image extends BasicDrawable {
 				int rgbv = img.getRGB(X, Y);
 				int[] rgb = new int[3];
 				rgb[2] = rgbv & (0xFF);
-				rgb[1] = rgbv & (0xFF << 8);
-				rgb[0] = rgbv & (0xFF << 16);
+				rgb[1] = (rgbv >> 8) & (0xFF);
+				rgb[0] = (rgbv >> 16) & (0xFF);
 				this.rgb[Y][X] = rgb;
 			}
 		}

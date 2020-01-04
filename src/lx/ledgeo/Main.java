@@ -71,7 +71,7 @@ public class Main {
 		LEDController ctl = board.getController();
 		ctl.setAlpha(3);
 		ctl.useBrightnessMod(true);
-		Menu menu = new Menu();
+		Menu menu = new Menu(input);
 		root.add(menu);
 		Game game = new Game();
 		root.add(game);

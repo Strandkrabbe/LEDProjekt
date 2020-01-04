@@ -13,15 +13,19 @@ public class Menu extends BasicDrawable
 	private int auswahlFeld = 1;
 	private Image menu;
 	private InputProvider input;
-	public Menu()	{
+	public Menu(InputProvider input)	{
+		this.input = input;
 		this.menu = new Image();
 		this.menu.load("Menu.png");
-		this.menu.setVisible(false);
+		this.menu.setVisible(true);
 		this.menu.setPosition(0, 0);
 		this.menu.setSize(18,10);
+		this.setPosition(0, 0);
+		this.setSize(18, 10);
+		this.setVisible(false);
 	}
-	@Override
 	
+	@Override
 	public boolean draw(DrawingArea a) 
 	{
 		if(!super.draw(a))
@@ -120,7 +124,11 @@ public class Menu extends BasicDrawable
 						case KeyEvent.VK_LEFT:
 							auswahlFeld--;
 							break;
-					}	
+					}
+					Main.draw();
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {}
 			}
 			return mapName;
 		}	finally	{

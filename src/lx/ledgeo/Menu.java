@@ -119,8 +119,8 @@ public class Menu extends BasicDrawable
 							break;
 						case KeyEvent.VK_DOWN:
 							auswahlFeld -= 3;
-							if(auswahlFeld < 0)
-							{	
+							if(auswahlFeld < 1)
+							{
 								auswahlFeld = 6+auswahlFeld;
 							}
 							break;

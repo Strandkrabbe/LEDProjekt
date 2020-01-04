@@ -68,6 +68,7 @@ public class Menu extends BasicDrawable
 				y=4;
 				break;
 		}
+		
 		a.drawRect(x, y, 5, 5);
 		return true;
 	}
@@ -119,10 +120,14 @@ public class Menu extends BasicDrawable
 							auswahlFeld -= 3;
 							break;
 						case KeyEvent.VK_RIGHT:
-							auswahlFeld++;	
+							auswahlFeld++;
 							break;
 						case KeyEvent.VK_LEFT:
 							auswahlFeld--;
+							if(auswahlFeld == 0)
+							{
+								auswahlFeld = 6;
+							}
 							break;
 					}
 					Main.draw();

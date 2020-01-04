@@ -52,7 +52,7 @@ public class Menu extends BasicDrawable
 				y=0;
 				break;
 			case 3:
-				x=11;
+				x=10;
 				y=0;
 				break;
 			case 4:
@@ -64,7 +64,7 @@ public class Menu extends BasicDrawable
 				y=4;
 				break;
 			case 6:
-				x=11;
+				x=10;
 				y=4;
 				break;
 		}

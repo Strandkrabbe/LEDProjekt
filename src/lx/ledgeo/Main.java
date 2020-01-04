@@ -69,18 +69,20 @@ public class Main {
 		BoardController board = root.getBoard();
 		board.reset();
 		LEDController ctl = board.getController();
-		ctl.setAlpha(4);
+		ctl.setAlpha(3);
 		ctl.useBrightnessMod(true);
+		Menu menu = new Menu();
+		root.add(menu);
 		Game game = new Game();
 		root.add(game);
-		boolean start = false;
-		while (!start)	{
-			if (input.hasKey())	{
-				if (input.getLastKey() == KeyEvent.VK_S)
-					start = true;
+		boolean active = true;
+		while (active)	{
+			String mapName = menu.levelAuswahl();
+			if (mapName == null)	{
+				active = false;
 			}
+			game.start(mapName, Skin.getDefaultSkin(), input);
 		}
-		game.start("map0", Skin.getDefaultSkin(), input);
 		root.close();
 		input.close();
 	}

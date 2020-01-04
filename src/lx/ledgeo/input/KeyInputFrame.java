@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.WindowConstants;
 
 public class KeyInputFrame extends JFrame implements InputProvider {
 
@@ -35,6 +36,10 @@ public class KeyInputFrame extends JFrame implements InputProvider {
 			this.addMouseListener(ml);
 		if (kl != null)
 			this.addKeyListener(kl);
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+//		this.addWindowListener(new WindowAdapter() {
+//			
+//		});
 		this.setVisible(true);
 	}
 	

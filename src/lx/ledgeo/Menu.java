@@ -16,7 +16,7 @@ public class Menu extends BasicDrawable
 	public Menu()	{
 		this.menu = new Image();
 		this.menu.load("Menu.png");
-		this.menu.setVisible(true);
+		this.menu.setVisible(false);
 		this.menu.setPosition(0, 0);
 		this.menu.setSize(18,10);
 	}
@@ -72,54 +72,59 @@ public class Menu extends BasicDrawable
 		auswahlFeld = 1;
 		String mapName = "Level 1";
 		boolean ausgewahlt = false;
-		while(!ausgewahlt)	
-		{
-				int nk = this.input.getLastKey();
-				if (nk == KeyEvent.VK_ESCAPE)	{
-					Log.info("Game stopped: ESC", "Game");
-				}
-				if (nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_ENTER)
-				{
-					switch(auswahlFeld)
-					{
-						case 1:
-							mapName="Level 1";
-							break;
-						case 2:
-							mapName="Level 2";
-							break;
-						case 3:
-							mapName="Level 3";
-							break;
-						case 4:
-							mapName="Level 4";
-							break;
-						case 5:
-							mapName="Level 5";
-							break;
-						case 6:
-							mapName="Level 6";
-							break;
+		this.setVisible(true);
+		try	{
+			while(!ausgewahlt)	
+			{
+					int nk = this.input.getLastKey();
+					if (nk == KeyEvent.VK_ESCAPE)	{
+						Log.info("Game stopped: ESC", "Game");
 					}
-					Log.info("Game Start:Level "+mapName, "Game");
-					return mapName;
-				}
-				switch(nk) 
-				{
-					case KeyEvent.VK_UP:
-						auswahlFeld += 3; 
-						break;
-					case KeyEvent.VK_DOWN:
-						auswahlFeld -= 3;
-						break;
-					case KeyEvent.VK_RIGHT:
-						auswahlFeld++;	
-						break;
-					case KeyEvent.VK_LEFT:
-						auswahlFeld--;
-						break;
-				}	
+					if (nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_ENTER)
+					{
+						switch(auswahlFeld)
+						{
+							case 1:
+								mapName="Level1";
+								break;
+							case 2:
+								mapName="Level2";
+								break;
+							case 3:
+								mapName="Level3";
+								break;
+							case 4:
+								mapName="Level4";
+								break;
+							case 5:
+								mapName="Level5";
+								break;
+							case 6:
+								mapName="Level6";
+								break;
+						}
+						Log.info("Game Start:Level "+mapName, "Game");
+						return mapName;
+					}
+					switch(nk) 
+					{
+						case KeyEvent.VK_UP:
+							auswahlFeld += 3; 
+							break;
+						case KeyEvent.VK_DOWN:
+							auswahlFeld -= 3;
+							break;
+						case KeyEvent.VK_RIGHT:
+							auswahlFeld++;	
+							break;
+						case KeyEvent.VK_LEFT:
+							auswahlFeld--;
+							break;
+					}	
+			}
+			return mapName;
+		}	finally	{
+			this.setVisible(false);
 		}
-		return mapName;
 	}
 }

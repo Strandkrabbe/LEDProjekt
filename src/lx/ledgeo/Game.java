@@ -13,11 +13,12 @@ public class Game extends Container {
 	
 	public static final int GAME_WIDTH = 18;
 	public static final int GAME_HEIGHT = 10;
-	public static final double ACCELERATION_GRAVITY = -0.35;
+	public static final double ACCELERATION_GRAVITY = -0.30;
 	public static final double VELOCITY_JUMP = 1.6;
 	public static final double VELOCITY_JUMP_LONG = 1.85;
 	public static final double VELOCITY_LIMIT_ABS = 2.5;
 	public static final long TICK_DURATION = 150;
+	public static final double NON_LINEAR_VELOCITY_EXP = 1.0;
 	public static final int FRAMES_PER_TICK = 2;
 	
 	public static final byte RETURN_RUN = 0;
@@ -62,9 +63,9 @@ public class Game extends Container {
 			if (background != null)
 				this.remove(this.background);
 			int[] bgcolor = ColorUtils.invert(this.player.getSkin().getMainColor());
-			ColorUtils.multiply(bgcolor, 0.19f);
+			ColorUtils.multiply(bgcolor, 0.16f);
 			this.background = Background.getByName(bgcolor);
-			this.add(this.background);
+			this.add(this.background,0);
 		}
 	}
 	
@@ -185,6 +186,7 @@ public class Game extends Container {
 		double tmpVelY = velocityY;
 		boolean negative = tmpVelY < 0;
 		tmpVelY = Math.abs(tmpVelY);
+		tmpVelY = Math.pow(tmpVelY, NON_LINEAR_VELOCITY_EXP);		// Square for better curve
 		do	{	// Prevent glitching by skipping more then 1.0 blocks -> calculate every block move
 									// 0.9 to prevent rounding issues
 									// !!! A block might be computed twice !!!

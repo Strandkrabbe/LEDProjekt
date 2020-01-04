@@ -15,6 +15,14 @@ public class Container extends BasicDrawable {
 		if (!this.elements.contains(d))
 			this.elements.add(d);
 	}
+	public synchronized void add(Drawable d,int index)	{
+		if (d != null && index >= 0)	{
+			if (index > this.elements.size())	{
+				index = this.elements.size();
+			}
+			this.elements.add(index, d);
+		}
+	}
 	public synchronized void remove(Drawable d)	{
 		this.elements.remove(d);
 	}

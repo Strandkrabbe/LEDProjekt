@@ -80,8 +80,9 @@ public class Main {
 			String mapName = menu.levelAuswahl();
 			if (mapName == null)	{
 				active = false;
+			}	else	{
+				game.start(mapName, Skin.getDefaultSkin(), input);
 			}
-			game.start(mapName, Skin.getDefaultSkin(), input);
 		}
 		root.close();
 		input.close();

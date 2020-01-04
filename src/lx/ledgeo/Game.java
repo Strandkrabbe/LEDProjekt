@@ -50,7 +50,7 @@ public class Game extends Container {
 	private void reset()	{
 		this.exactPlayerX = 0.0;
 		this.exactPlayerY = 1.0;
-		this.velocityX = 0.5;
+		this.velocityX = 0.25;
 		this.velocityY = 0.0;
 		this.applyVelocityY = Double.NaN;
 		this.running = false;

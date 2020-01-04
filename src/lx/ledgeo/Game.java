@@ -234,7 +234,8 @@ public class Game extends Container {
 		this.map.setCurrentXPos(X - 4);
 		this.map.setCurrentYPos(Math.max(Y - 5,0));
 		this.player.setPosition(X - this.map.getCurrentXPos(),Y - map.getCurrentYPos());
-		this.background.setMapPosition(((double)X)/(this.map.getFinishX() + 1));
+		if (background != null)
+			this.background.setMapPosition(((double)X)/(this.map.getFinishX() + 1));
 		boolean vis = super.draw(a);
 		if (!vis)
 			return false;
@@ -247,7 +248,7 @@ public class Game extends Container {
 		Log.info("Starting game...", "Game");
 		this.input = in;
 		this.player.setSkin(skin);
-		this.map.loadMap(mapName);
+		this.loadMap(mapName);
 		this.reset();
 		this.setVisible(true);
 		if (!this.map.isMapLoaded())	{

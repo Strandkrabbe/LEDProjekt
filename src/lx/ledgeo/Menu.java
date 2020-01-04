@@ -75,6 +75,9 @@ public class Menu extends BasicDrawable
 		while(!ausgewahlt)	
 		{
 				int nk = this.input.getLastKey();
+				if (nk == KeyEvent.VK_ESCAPE)	{
+					Log.info("Game stopped: ESC", "Game");
+				}
 				if (nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_ENTER)
 				{
 					switch(auswahlFeld)
@@ -98,8 +101,6 @@ public class Menu extends BasicDrawable
 							mapName="Level 6";
 							break;
 					}
-					
-
 					Log.info("Game Start:Level "+mapName, "Game");
 					return mapName;
 				}

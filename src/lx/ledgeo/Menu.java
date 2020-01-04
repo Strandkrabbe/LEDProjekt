@@ -62,6 +62,7 @@ public class Menu extends BasicDrawable
 			case 6:
 				x=12;
 				y=5;
+				break;
 		}
 		a.drawRect(x, y, 5, 5);
 		return true;
@@ -69,13 +70,35 @@ public class Menu extends BasicDrawable
 	public String levelAuswahl()
 	{
 		auswahlFeld = 1;
+		String mapName = "Level 1";
 		boolean ausgewahlt = false;
 		while(!ausgewahlt)	
 		{
 				int nk = this.input.getLastKey();
 				if (nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_ENTER)
 				{
-					String mapName = "";
+					switch(auswahlFeld)
+					{
+						case 1:
+							mapName="Level 1";
+							break;
+						case 2:
+							mapName="Level 2";
+							break;
+						case 3:
+							mapName="Level 3";
+							break;
+						case 4:
+							mapName="Level 4";
+							break;
+						case 5:
+							mapName="Level 5";
+							break;
+						case 6:
+							mapName="Level 6";
+							break;
+					}
+					
 
 					Log.info("Game Start:Level "+mapName, "Game");
 					return mapName;
@@ -96,6 +119,6 @@ public class Menu extends BasicDrawable
 						break;
 				}	
 		}
-		return "Fehler";
+		return mapName;
 	}
 }

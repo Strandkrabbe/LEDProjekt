@@ -25,6 +25,9 @@ public class Player extends BasicDrawable {
 	public void setSkin(Skin s)	{
 		this.skin = s;
 	}
+	public Skin getSkin()	{
+		return this.skin;
+	}
 	
 	@Override
 	public int getHeight() {

@@ -29,6 +29,10 @@ public class Skin {
 			currentTime = this.skins.size() - 1;
 		return this.skins.get((int)currentTime);
 	}
+	public int[] getMainColor()	{
+		int[][][] skin0 = this.getStaticSkin();
+		return skin0[0][0];
+	}
 	
 	public static Skin getDefaultSkin()	{
 		int[][][] defskin0 = new int[][][] {

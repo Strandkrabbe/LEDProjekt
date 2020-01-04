@@ -7,6 +7,7 @@ import lx.ledgeo.draw.Container;
 import lx.ledgeo.draw.DrawingArea;
 import lx.ledgeo.input.InputProvider;
 import lx.ledgeo.util.ArrayUtils;
+import lx.ledgeo.util.ColorUtils;
 
 public class Game extends Container {
 	
@@ -17,6 +18,7 @@ public class Game extends Container {
 	public static final double VELOCITY_JUMP_LONG = 1.85;
 	public static final double VELOCITY_LIMIT_ABS = 2.5;
 	public static final long TICK_DURATION = 150;
+	public static final int FRAMES_PER_TICK = 2;
 	
 	public static final byte RETURN_RUN = 0;
 	public static final byte RETURN_DEAD = 1;
@@ -24,10 +26,11 @@ public class Game extends Container {
 	
 	private Player player;
 	private Map map;
-	private double exactPlayerX = 0.0;	// scale: [pixel]		// player draw pos ceil/floor?
-	private double exactPlayerY = 0.0;
-	private double velocityX = 0.5;		// scale: [pixel/tick]	// Has to be below (or equal to) 1!!
-	private double velocityY = 0.0;
+	private Background background;
+	private double exactPlayerX;	// scale: [pixel]		// player draw pos ceil/floor?	// Set at reset
+	private double exactPlayerY;
+	private double velocityX;		// scale: [pixel/tick]	// Has to be below (or equal to) 1!!
+	private double velocityY;
 	private double applyVelocityY = Double.NaN;
 	private double gravity = ACCELERATION_GRAVITY;
 	private InputProvider input;
@@ -56,7 +59,12 @@ public class Game extends Container {
 	public void loadMap(String s)	{
 		if (!running)	{
 			this.map.loadMap(s);
-			// Try to find a matching background here
+			if (background != null)
+				this.remove(this.background);
+			int[] bgcolor = ColorUtils.invert(this.player.getSkin().getMainColor());
+			ColorUtils.multiply(bgcolor, 0.19f);
+			this.background = Background.getByName(bgcolor);
+			this.add(this.background);
 		}
 	}
 	
@@ -226,6 +234,7 @@ public class Game extends Container {
 		this.map.setCurrentXPos(X - 4);
 		this.map.setCurrentYPos(Math.max(Y - 5,0));
 		this.player.setPosition(X - this.map.getCurrentXPos(),Y - map.getCurrentYPos());
+		this.background.setMapPosition(((double)X)/(this.map.getFinishX() + 1));
 		boolean vis = super.draw(a);
 		if (!vis)
 			return false;
@@ -237,8 +246,8 @@ public class Game extends Container {
 	public void start(String mapName,Skin skin,InputProvider in)	{
 		Log.info("Starting game...", "Game");
 		this.input = in;
-		this.map.loadMap(mapName);
 		this.player.setSkin(skin);
+		this.map.loadMap(mapName);
 		this.reset();
 		this.setVisible(true);
 		if (!this.map.isMapLoaded())	{
@@ -271,7 +280,7 @@ public class Game extends Container {
 				Log.info("Game neded: DEAD", "Game");
 				// TODO Enable endscreen here
 				try {
-					Thread.sleep(2000);
+					this.waitForESC();
 				} catch (InterruptedException e) {}
 			}
 			if (re == RETURN_FINISH)	{
@@ -280,16 +289,18 @@ public class Game extends Container {
 				Log.info("Game ended: FINISH", "Game");
 				// TODO enable endscreen 2 here
 				try {
-					Thread.sleep(2000);
+					this.waitForESC();
 				} catch (InterruptedException e) {}
 			}
-			Main.draw();
 			try {
-				Thread.sleep(TICK_DURATION);
+				long frame_duration = TICK_DURATION/FRAMES_PER_TICK;
+				for (int C = 0;C < FRAMES_PER_TICK;C++)	{
+					Main.draw();
+					Thread.sleep(frame_duration);
+				}
 			} catch (InterruptedException e) {
 				Log.error("Game interrupted");
 				this.running = false;
-				return;
 			}
 		}
 		this.setVisible(false);
@@ -298,6 +309,15 @@ public class Game extends Container {
 	public void stop()	{
 		Log.info("Game ended: PROG_STOP", "Game");
 		this.running = false;
+	}
+	
+	private void waitForESC() throws InterruptedException	{
+		boolean done = false;
+		do	{
+			if (this.input.hasKey() && this.input.getLastKey() == KeyEvent.VK_ESCAPE)
+				done = true;
+			Thread.sleep(1000);
+		} while (!done);
 	}
 
 }

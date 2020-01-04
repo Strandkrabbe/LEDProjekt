@@ -69,7 +69,7 @@ public class Main {
 		BoardController board = root.getBoard();
 		board.reset();
 		LEDController ctl = board.getController();
-		ctl.setAlpha(2);
+		ctl.setAlpha(4);
 		ctl.useBrightnessMod(true);
 		Game game = new Game();
 		root.add(game);

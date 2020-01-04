@@ -44,24 +44,24 @@ public class Menu extends BasicDrawable
 				y=0;
 				break;
 			case 2:
-				x=7;
+				x=6;
 				y=0;
 				break;
 			case 3:
-				x=12;
+				x=11;
 				y=0;
 				break;
 			case 4:
 				x=2;
-				y=5;
+				y=4;
 				break;
 			case 5:
-				x=7;
-				y=5;
+				x=6;
+				y=4;
 				break;
 			case 6:
-				x=12;
-				y=5;
+				x=11;
+				y=4;
 				break;
 		}
 		a.drawRect(x, y, 5, 5);

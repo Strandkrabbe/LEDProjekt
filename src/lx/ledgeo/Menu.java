@@ -121,7 +121,7 @@ public class Menu extends BasicDrawable
 							auswahlFeld -= 3;
 							if(auswahlFeld < 0)
 							{	
-								auswahlFeld = 6-auswahlFeld;
+								auswahlFeld = 6+auswahlFeld;
 							}
 							break;
 						case KeyEvent.VK_RIGHT:

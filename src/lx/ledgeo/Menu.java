@@ -83,7 +83,8 @@ public class Menu extends BasicDrawable
 			{
 					int nk = this.input.getLastKey();
 					if (nk == KeyEvent.VK_ESCAPE)	{
-						Log.info("Game stopped: ESC", "Game");
+						Log.info("Game stopped: ESC", "Menu");
+						return null;
 					}
 					if (nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_ENTER)
 					{
@@ -118,6 +119,10 @@ public class Menu extends BasicDrawable
 							break;
 						case KeyEvent.VK_DOWN:
 							auswahlFeld -= 3;
+							if(auswahlFeld < 0)
+							{	
+								auswahlFeld = 6-auswahlFeld;
+							}
 							break;
 						case KeyEvent.VK_RIGHT:
 							auswahlFeld++;

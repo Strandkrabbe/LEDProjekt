@@ -58,6 +58,8 @@ public class Game extends Container {
 		this.setSize(GAME_WIDTH, GAME_HEIGHT);
 		this.add(map);
 		this.add(player);
+		this.add(endscreenLose);
+		this.add(endscreenWin);
 		this.setVisible(false);
 		this.reset();
 	}

@@ -91,11 +91,11 @@ public class Game extends Container {
 	// Converts the real player position to the position on the map used to identify
 	// a block type
 	private int xToInt(double x) {
-		return (int) x;
+		return gravity < 0 ? (int) x : ((int) Math.ceil(x));
 	}
 
 	private int yToInt(double y) {
-		return (int) y;
+		return gravity < 0 ? (int) y : ((int) Math.ceil(y));
 	}
 
 	@SuppressWarnings("unused")
@@ -243,7 +243,7 @@ public class Game extends Container {
 				tmpVelY = 0.0;
 				comp = 0.0;
 				this.velocityY = 0.0;
-				exactPlayerY = ((int) exactPlayerY) - 1;	// Ensure player is not floating
+				exactPlayerY = ((int) exactPlayerY) + Math.signum(this.gravity);	// Ensure player is not floating
 			}
 			if (negative)
 				exactPlayerY -= comp;

@@ -15,6 +15,7 @@ public class Map extends BasicDrawable {
 	private int currentYPos = 0; // 0 is default height, the bottom left corner is defined as 0,0
 	private int level[][] = null;
 	private Image noMapImg;
+	private String mapName = "*";
 
 	private int[] color_solid = { 0, 255, 0 };
 	private int[] color_invalid_solid = { 255, 0, 255};
@@ -43,6 +44,7 @@ public class Map extends BasicDrawable {
 	}
 
 	public void loadMap(String name) {
+		this.mapName = name;
 		try {
 			this.level = MapUtil.loadMap(name);
 		} catch (IOException e) {

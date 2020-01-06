@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import henning.leddriverj.util.Log;
 import lx.ledgeo.draw.Container;
 import lx.ledgeo.draw.DrawingArea;
+import lx.ledgeo.draw.Image;
 import lx.ledgeo.input.InputProvider;
 import lx.ledgeo.util.ArrayUtils;
 
@@ -37,8 +38,20 @@ public class Game extends Container {
 	private double gravity = ACCELERATION_GRAVITY;
 	private InputProvider input;
 	private boolean running = false;
+	private Image endscreenLose;
+	private Image endscreenWin;
 
 	public Game() {
+		this.endscreenLose = new Image();
+		this.endscreenWin = new Image();
+		this.endscreenLose.load("Lose.png");
+		this.endscreenWin.load("Win.png");
+		this.endscreenLose.setPosition(0, 0);
+		this.endscreenLose.setSize(GAME_WIDTH, GAME_HEIGHT);
+		this.endscreenWin.setPosition(0, 0);
+		this.endscreenWin.setSize(GAME_WIDTH, GAME_HEIGHT);
+		this.endscreenLose.setVisible(false);
+		this.endscreenWin.setVisible(false);
 		this.map = new Map();
 		this.player = new Player();
 		this.setPosition(0, 0);
@@ -58,6 +71,8 @@ public class Game extends Container {
 		this.applyVelocityY = Double.NaN;
 		this.running = false;
 		this.gravity = ACCELERATION_GRAVITY;
+		this.endscreenLose.setVisible(false);
+		this.endscreenWin.setVisible(false);
 	}
 
 	public void loadMap(String s) {
@@ -284,14 +299,15 @@ public class Game extends Container {
 			} catch (InterruptedException e) {
 			}
 		} else {
-			run();
+			run(mapName,skin);
 		}
 	}
 
-	private void run() { // Run method (main method of game)
+	private void run(String mapName,Skin skin) { // Run method (main method of game)
 		Log.debug("Executing loop...", "Game");
 		this.running = true;
 		this.player.setVisible(true);
+		boolean restart = false;
 		while (running) {
 			while (this.input.hasKey()) {
 				int nk = this.input.getLastKey();
@@ -308,9 +324,11 @@ public class Game extends Container {
 				this.running = false;
 				this.player.setVisible(false);
 				Log.info("Game neded: DEAD", "Game");
-				// TODO Enable endscreen here
+				Main.draw();
 				try {
-					this.waitForESC();
+					Thread.sleep(1000);
+					this.endscreenLose.setVisible(true);
+					restart = this.waitForESC();
 				} catch (InterruptedException e) {
 				}
 			}
@@ -318,9 +336,11 @@ public class Game extends Container {
 				this.running = false;
 				this.player.setVisible(false);
 				Log.info("Game ended: FINISH", "Game");
-				// TODO enable endscreen 2 here
+				Main.draw();
 				try {
-					this.waitForESC();
+					Thread.sleep(1000);
+					this.endscreenWin.setVisible(true);
+					restart = this.waitForESC();
 				} catch (InterruptedException e) {
 				}
 			}
@@ -336,6 +356,8 @@ public class Game extends Container {
 			}
 		}
 		this.setVisible(false);
+		if (restart)
+			this.start(mapName, skin, this.input);
 		Log.debug("Exiting loop", "Game");
 	}
 
@@ -344,14 +366,17 @@ public class Game extends Container {
 		this.running = false;
 	}
 
-	private void waitForESC() throws InterruptedException {
-		boolean done = false;
+	private boolean waitForESC() throws InterruptedException {
 		do	{
 			Main.draw();
-			if (this.input.hasKey() && this.input.getLastKey() == KeyEvent.VK_ESCAPE)
-				done = true;
-			Thread.sleep(TICK_DURATION);
-		} while (!done);
+			if (this.input.hasKey())	{
+				if (this.input.getLastKey() == KeyEvent.VK_ESCAPE)	{
+					return false;
+				}	else	{
+					return true;
+				}
+			}
+		} while (true);
 	}
 
 }

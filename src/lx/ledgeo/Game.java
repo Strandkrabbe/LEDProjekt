@@ -10,7 +10,7 @@ import lx.ledgeo.util.ColorUtils;
 
 public class Game extends Container {
 	// integrate (-bx + a) from 0 to 32 = 0.25 and integrate (-bx + a) from 0 to 16 = 4.1
-	// integrate (-0.0341797x + a) from 0 to 16 = 5.5
+	// integrate (-0.0341797x + a) from 0 to 16 = 5.5 
 
 	public static final int GAME_WIDTH = 18;
 	public static final int GAME_HEIGHT = 10;

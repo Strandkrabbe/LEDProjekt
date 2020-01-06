@@ -260,13 +260,38 @@ public class Game extends Container {
 	void changeSize() {
 		int X = xToInt(exactPlayerX);
 		int Y = yToInt(exactPlayerY);
-		if (map.getLevel(X, Y - 1) == -2) {
+		if (this.isToutchingBlock(-2)) {
 			player.setScale(1);
-		} else if (map.getLevel(X, Y - 1) == -3) {
+		} else if (this.isToutchingBlock(-3)) {
 			player.setScale(2);
-		} else if (map.getLevel(X, Y - 1) == -4) {
+		} else if (this.isToutchingBlock(-4)) {
 			player.setScale(3);
 		}
+	}
+	
+	private boolean isOnBlock(int type)	{
+		int X = xToInt(exactPlayerX);
+		int Y = yToInt(exactPlayerY);
+		int offsetY = (this.gravity < 0 ? -1 : this.player.getScale());
+		for (int XA = 0;XA < this.player.getScale();XA++)	{
+			if (this.map.getLevel(X + XA, Y + offsetY) == type)
+				return true;
+		}
+		return false;
+	}
+	private boolean isInBlock(int type)	{
+		int X = xToInt(exactPlayerX);
+		int Y = yToInt(exactPlayerY);
+		for (int XA = 0;XA < this.player.getScale();XA++)	{
+			for (int YA = 0;YA < this.player.getScale();YA++)	{
+				if (this.map.getLevel(X + XA, Y + YA) == type)
+					return true;
+			}
+		}
+		return false;
+	}
+	private boolean isToutchingBlock(int type)	{
+		return this.isOnBlock(type) || this.isInBlock(type);
 	}
 
 	@Override

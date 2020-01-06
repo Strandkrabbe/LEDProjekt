@@ -24,7 +24,8 @@ public class Map extends BasicDrawable {
 	private int[] color_scale1 = { 10, 250, 180 };
 	private int[] color_scale2 = { 10, 250, 180 };
 	private int[] color_scale3 = { 10, 250, 180 };
-	private int[] color_star = { 255, 179, 0  };
+	private int[] color_star = { 255,179 , 0 };
+	private int[] color_deco = { 255,0 ,0 };
 	private int[] color_gravity = {255,0,255};
 
 	private int[] color_finish = { 255, 255, 255 };
@@ -120,6 +121,12 @@ public class Map extends BasicDrawable {
 						color = color_scale3;
 						break;
 					case -5:
+						color = color_star;
+						break;
+					case -6:
+						color = color_deco;
+						break;
+					case -7:
 						color = color_gravity;
 						break;
 					case Integer.MIN_VALUE:

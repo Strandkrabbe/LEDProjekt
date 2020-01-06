@@ -57,4 +57,8 @@ public abstract class BasicDrawable implements Drawable {
 	public void setVisible(boolean v)	{
 		this.visible = v;
 	}
+	
+	public boolean isVisible()	{
+		return this.visible;
+	}
 }

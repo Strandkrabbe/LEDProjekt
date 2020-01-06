@@ -283,6 +283,10 @@ public class Game extends Container {
 			return false;
 		int[][][] buffer = ArrayUtils.copy3(a.getArea());
 		a.drawInverse(buffer);
+		if (this.endscreenLose.isVisible())
+			a.draw(endscreenLose);
+		if (this.endscreenWin.isVisible())
+			a.draw(endscreenWin);
 		return true;
 	}
 
@@ -376,6 +380,7 @@ public class Game extends Container {
 					return true;
 				}
 			}
+			Thread.sleep(TICK_DURATION);
 		} while (true);
 	}
 

@@ -148,5 +148,9 @@ public class Map extends BasicDrawable {
 	public void setCurrentYPos(int currentYPos) {
 		this.currentYPos = currentYPos;
 	}
+	
+//	private boolean isCollectingStar()	{
+//		
+//	}
 
 }

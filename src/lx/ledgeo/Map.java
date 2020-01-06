@@ -51,6 +51,9 @@ public class Map extends BasicDrawable {
 			Log.error(e);
 		}
 	}
+	public void setStarDone(int x,int y)	{
+		this.level[y][x] = 0;
+	}
 
 	public int getLevel(int x, int y) {
 		if (y < 0 || y >= this.level.length)
@@ -127,6 +130,7 @@ public class Map extends BasicDrawable {
 						color = color_deco;
 						break;
 					case -7:
+					case -8:
 						color = color_gravity;
 						break;
 					case Integer.MIN_VALUE:

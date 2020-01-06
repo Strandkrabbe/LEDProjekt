@@ -121,7 +121,7 @@ public class Game extends Container {
 			return true;
 		for (int XA = 0; XA < this.player.getScale(); XA++) {
 			int type = map.getLevel(xToInt(x, false) + XA, yToInt(y) + ((gravity < 0) ? -1 : this.player.getScale()));
-			if (type != 0 && type != 2) {
+			if (type != 0 && type != 2 && type != -6 && type != -5) {
 				return true;
 			}
 		}
@@ -131,7 +131,7 @@ public class Game extends Container {
 	boolean oneAboveGround(double x,double y)	{
 		for (int XA = 0;XA < this.player.getScale();XA++)	{	// For better playability
 			int type = map.getLevel(xToInt(x,false) + XA,yToInt(y) + ((gravity < 0) ? -2 : this.player.getScale() + 1));
-			if (type != 0 && type != 2) {
+			if (type != 0 && type != 2 && type != -6 && type != -5) {
 				return true;
 			}
 		}
@@ -258,14 +258,21 @@ public class Game extends Container {
 	}
 
 	void changeSize() {
-		int X = xToInt(exactPlayerX);
-		int Y = yToInt(exactPlayerY);
 		if (this.isToutchingBlock(-2)) {
 			player.setScale(1);
 		} else if (this.isToutchingBlock(-3)) {
 			player.setScale(2);
 		} else if (this.isToutchingBlock(-4)) {
 			player.setScale(3);
+		}
+	}
+	
+	void changeGravity()	{
+		if (this.isToutchingBlock(-7))	{
+			this.gravity = ACCELERATION_GRAVITY * -1;
+		}
+		if (this.isToutchingBlock(-8))	{
+			this.gravity = ACCELERATION_GRAVITY;
 		}
 	}
 	

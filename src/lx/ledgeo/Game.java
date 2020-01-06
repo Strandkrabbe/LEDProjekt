@@ -225,6 +225,7 @@ public class Game extends Container {
 				// 0.9 to prevent rounding issues
 				// !!! A block might be computed twice !!!
 			this.bigJump();
+			this.changeGravity();
 			this.changeSize();
 			if (isDead(exactPlayerX, exactPlayerY)) {
 				return RETURN_DEAD;

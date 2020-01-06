@@ -17,15 +17,16 @@ public class MapUtil {
 	public static final int[] COLOR_SOLID = { 0, 255, 0, 3 }; // : 3
 	public static final int[] COLOR_SPIKE = { 255, 0, 0, 2 }; // : 2
 	public static final int[] COLOR_INVALID_SOLID = { 255, 255, 0, 4 };
-	public static final int[] COLOR_JUMP = { 255, 165, 0, -1 }; // : -1
+	public static final int[] COLOR_JUMP = { 255, 225, 0, -1 }; // : -1
 	public static final int[] COLOR_SCALE1 = { 0, 0, 20, -2 }; // : -2
 	public static final int[] COLOR_SCALE2 = { 0, 0, 40, -3 }; // : -3
 	public static final int[] COLOR_SCALE3 = { 0, 0, 60, -4 }; // : -4
+	public static final int[] COLOR_STAR = { 255, 179, 0, -5 }; // : -5
 	public static final int[] COLOR_FINISH = { 20, 0, 0, Integer.MIN_VALUE };
 	public static final int[][] COLORS_MAP;
 	static {
 		COLORS_MAP = new int[][] { COLOR_NONE, COLOR_SOLID, COLOR_SPIKE, COLOR_JUMP, COLOR_SCALE1, COLOR_SCALE2,
-				COLOR_SCALE3, COLOR_FINISH };
+				COLOR_SCALE3, COLOR_FINISH, COLOR_STAR };
 	}
 
 	public static int[][] loadFromFile(InputStream i) throws IOException {

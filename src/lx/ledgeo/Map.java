@@ -23,6 +23,7 @@ public class Map extends BasicDrawable {
 	private int[] color_scale1 = { 10, 250, 180 };
 	private int[] color_scale2 = { 10, 250, 180 };
 	private int[] color_scale3 = { 10, 250, 180 };
+	private int[] color_star = { 255, 179, 0  };
 
 	private int[] color_finish = { 255, 255, 255 };
 
@@ -147,5 +148,9 @@ public class Map extends BasicDrawable {
 	public void setCurrentYPos(int currentYPos) {
 		this.currentYPos = currentYPos;
 	}
+	
+//	private boolean isCollectingStar()	{
+//		
+//	}
 
 }

@@ -1,12 +1,12 @@
 package lx.ledgeo;
 
 import java.awt.event.KeyEvent;
+
 import henning.leddriverj.util.Log;
 import lx.ledgeo.draw.Container;
 import lx.ledgeo.draw.DrawingArea;
 import lx.ledgeo.input.InputProvider;
 import lx.ledgeo.util.ArrayUtils;
-import lx.ledgeo.util.ColorUtils;
 
 public class Game extends Container {
 	// integrate (-bx + a) from 0 to 32 = 0.25 and integrate (-bx + a) from 0 to 16 = 4.1
@@ -54,6 +54,7 @@ public class Game extends Container {
 		this.exactPlayerY = 1.0;
 		this.velocityX = 0.25;
 		this.velocityY = 0.0;
+		this.player.setScale(2);
 		this.applyVelocityY = Double.NaN;
 		this.running = false;
 		this.gravity = ACCELERATION_GRAVITY;

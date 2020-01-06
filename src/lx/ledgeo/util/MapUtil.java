@@ -28,7 +28,7 @@ public class MapUtil {
 	public static final int[][] COLORS_MAP;
 	static {
 		COLORS_MAP = new int[][] { COLOR_NONE, COLOR_SOLID, COLOR_SPIKE, COLOR_JUMP, COLOR_SCALE1, COLOR_SCALE2,
-				COLOR_SCALE3, COLOR_FINISH, COLOR_STAR };
+				COLOR_SCALE3, COLOR_FINISH, COLOR_STAR, COLOR_DECO, COLOR_GRAVITY };
 	}
 
 	public static int[][] loadFromFile(InputStream i) throws IOException {

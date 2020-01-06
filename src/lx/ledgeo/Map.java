@@ -17,6 +17,7 @@ public class Map extends BasicDrawable {
 	private Image noMapImg;
 
 	private int[] color_solid = { 0, 255, 0 };
+	private int[] color_invalid_solid = { 255, 0, 255};
 	private int[] color_spike = { 255, 0, 0 };
 	private int[] color_playerblock = { 0, 0, 255 }; // Was is das??
 	private int[] color_jump = { 255, 225, 0 };
@@ -24,6 +25,7 @@ public class Map extends BasicDrawable {
 	private int[] color_scale2 = { 10, 250, 180 };
 	private int[] color_scale3 = { 10, 250, 180 };
 	private int[] color_star = { 255, 179, 0  };
+	private int[] color_gravity = {255,0,255};
 
 	private int[] color_finish = { 255, 255, 255 };
 
@@ -102,6 +104,9 @@ public class Map extends BasicDrawable {
 					case 3:
 						color = color_solid;
 						break;
+					case 4:
+						color = color_invalid_solid;
+						break;
 					case -1:
 						color = color_jump;
 						break;
@@ -113,6 +118,9 @@ public class Map extends BasicDrawable {
 						break;
 					case -4:
 						color = color_scale3;
+						break;
+					case -5:
+						color = color_gravity;
 						break;
 					case Integer.MIN_VALUE:
 						color = color_finish;

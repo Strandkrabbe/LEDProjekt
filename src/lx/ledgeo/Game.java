@@ -273,11 +273,12 @@ public class Game extends Container {
 		int X = xToInt(exactPlayerX);
 		int Y = yToInt(exactPlayerY);
 		int offsetY = (this.gravity < 0 ? -1 : this.player.getScale());
-		for (int XA = 0;XA < this.player.getScale();XA++)	{
-			if (this.map.getLevel(X + XA, Y + offsetY) == type)
-				return true;
-		}
-		return false;
+//		for (int XA = 0;XA < this.player.getScale();XA++)	{
+//			if (this.map.getLevel(X + XA, Y + offsetY) == type)
+//				return true;
+//		}
+//		return false;
+		return this.map.getLevel(X, Y + offsetY) == type;
 	}
 	private boolean isInBlock(int type)	{
 		int X = xToInt(exactPlayerX);

@@ -44,7 +44,7 @@ public class Game extends Container {
 	public Game() {
 		this.endscreenLose = new Image();
 		this.endscreenWin = new Image();
-		this.endscreenLose.load("Lose.png");
+		this.endscreenLose.load("lose.png");
 		this.endscreenWin.load("Win.png");
 		this.endscreenLose.setPosition(0, 0);
 		this.endscreenLose.setSize(GAME_WIDTH, GAME_HEIGHT);

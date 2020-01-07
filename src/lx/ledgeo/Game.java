@@ -308,11 +308,14 @@ public class Game extends Container {
 		if (this.isVisible())	{
 			int X = xToInt(exactPlayerX);
 			int Y = yToInt(exactPlayerY);
-			this.map.setCurrentXPos(X - 4);
+			this.map.setCurrentXPos(X - 5);
 			this.map.setCurrentYPos(Math.min(Math.max(Y - 5, 0),this.map.getLevelHeight() - 10));
 			this.player.setPosition(X - this.map.getCurrentXPos(), Y - map.getCurrentYPos());
 			if (background != null)
 				this.background.setMapPosition(((double) X) / (this.map.getFinishX() + 1));
+			int[] fortschritt = new int[] { 255, 255, 255 };
+			a.setColor(fortschritt);
+			a.drawLine(0, 0,  0, (int)(exactPlayerX/map.getFinishX())*10);
 		}
 		boolean vis = super.draw(a);
 		if (!vis)

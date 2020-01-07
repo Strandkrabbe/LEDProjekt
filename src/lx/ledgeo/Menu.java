@@ -11,11 +11,22 @@ public class Menu extends BasicDrawable {
 	private int auswahlFeld = 1;
 	private Image menu;
 	private InputProvider input;
-
+	public static boolean star = false;
+	
 	public Menu(InputProvider input) {
 		this.input = input;
 		this.menu = new Image();
 		this.menu.load("Menu.png");
+		this.menu.setVisible(true);
+		this.menu.setPosition(0, 0);
+		this.menu.setSize(18, 10);
+		this.setPosition(0, 0);
+		this.setSize(18, 10);
+		this.setVisible(false);
+	}
+	public Menu(String name) {
+		this.menu = new Image();
+		this.menu.load(name);
 		this.menu.setVisible(true);
 		this.menu.setPosition(0, 0);
 		this.menu.setSize(18, 10);
@@ -30,10 +41,16 @@ public class Menu extends BasicDrawable {
 			return false;
 		}
 		int[] Cursor = new int[] { 0, 255, 255 };
+		if(star){
+			Menu("Menu_star.png");
+		}
+		else{
+			Menu("Menu.png");
+		}
 		a.draw(menu);
 		a.setColor(Cursor);
 		int x = 2;
-		int y = 0;
+		int y = 0;	
 		while (auswahlFeld > 6) {
 			auswahlFeld -= 6;
 		}
@@ -68,6 +85,10 @@ public class Menu extends BasicDrawable {
 		return true;
 	}
 
+	private void Menu(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 	public String levelAuswahl() {
 		auswahlFeld = 1;
 		String mapName = "Level 1";
@@ -79,30 +100,99 @@ public class Menu extends BasicDrawable {
 				if (nk == KeyEvent.VK_ESCAPE) {
 					Log.info("Game stopped: ESC", "Menu");
 					return null;
-				}
+				}				
 				if (nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_ENTER) {
 					switch (auswahlFeld) {
 					case 1:
+						if(star) {
+							if(ScoreManager.getInstance().getStarEarned("Level1")) {
+								mapName ="Level1_Star_Got.png";
+								return mapName;
+							}else
+							{
+								
+							}
+						}
+						else {
 						mapName = "Level1";
+						}
 						break;
 					case 2:
+						if(star) {
+							if(ScoreManager.getInstance().getStarEarned("Level2")) {
+								mapName ="Level2_Star_Got.png";
+								return mapName;
+							}else
+							{
+								
+							}
+						}
+						else {
 						mapName = "Level2";
+						}
 						break;
 					case 3:
+						if(star) {
+							if(ScoreManager.getInstance().getStarEarned("Level3")) {
+								mapName ="Level3_Star_Got.png";
+								return mapName;
+							}else
+							{
+								
+							}
+						}
+						else {
 						mapName = "Level3";
+						}
 						break;
 					case 4:
+						if(star) {
+							if(ScoreManager.getInstance().getStarEarned("Level4")) {
+								mapName ="Level4_Star_Got.png";
+								return mapName;
+							}else
+							{
+								
+							}
+						}
+						else {
 						mapName = "Level4";
+						}
 						break;
 					case 5:
+						if(star) {
+							if(ScoreManager.getInstance().getStarEarned("Level5")) {
+								mapName ="Level5_Star_Got.png";
+								return mapName;
+							}else
+							{
+								
+							}
+						}
+						else {
 						mapName = "Level5";
+						}
 						break;
 					case 6:
+						if(star) {
+							if(ScoreManager.getInstance().getStarEarned("Level6")) {
+								mapName ="Level6_Star_Got.png";
+								return mapName;
+							}else
+							{
+								
+							}
+						}
+						else {
 						mapName = "Level6";
+						}
 						break;
 					}
 					Log.info("Game Start:Level " + mapName, "Game");
 					return mapName;
+				}
+				if (nk == KeyEvent.VK_R) {	
+					star=!star;
 				}
 				switch (nk) {
 				case KeyEvent.VK_UP:

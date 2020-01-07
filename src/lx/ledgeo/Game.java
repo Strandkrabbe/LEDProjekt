@@ -19,7 +19,7 @@ public class Game extends Container {
 	public static final double VELOCITY_JUMP = 0.504688;
 	public static final double VELOCITY_JUMP_LONG = 0.592188;
 	public static final double VELOCITY_LIMIT_ABS = 1.2287;
-	public static final long TICK_DURATION = 75;
+	public static final long TICK_DURATION = 60;
 	public static final double NON_LINEAR_VELOCITY_EXP = 1.0;
 	public static final int FRAMES_PER_TICK = 1;
 	
@@ -305,13 +305,15 @@ public class Game extends Container {
 
 	@Override
 	public synchronized boolean draw(DrawingArea a) {
-		int X = xToInt(exactPlayerX);
-		int Y = yToInt(exactPlayerY);
-		this.map.setCurrentXPos(X - 4);
-		this.map.setCurrentYPos(Math.max(Y - 5, 0));
-		this.player.setPosition(X - this.map.getCurrentXPos(), Y - map.getCurrentYPos());
-		if (background != null)
-			this.background.setMapPosition(((double) X) / (this.map.getFinishX() + 1));
+		if (this.isVisible())	{
+			int X = xToInt(exactPlayerX);
+			int Y = yToInt(exactPlayerY);
+			this.map.setCurrentXPos(X - 4);
+			this.map.setCurrentYPos(Math.min(Math.max(Y - 5, 0),this.map.getLevelHeight() - 10));
+			this.player.setPosition(X - this.map.getCurrentXPos(), Y - map.getCurrentYPos());
+			if (background != null)
+				this.background.setMapPosition(((double) X) / (this.map.getFinishX() + 1));
+		}
 		boolean vis = super.draw(a);
 		if (!vis)
 			return false;

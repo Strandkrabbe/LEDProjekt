@@ -75,6 +75,9 @@ public class Map extends BasicDrawable {
 	public int getFinishX() {
 		return this.level[0].length;
 	}
+	public int getLevelHeight()	{
+		return this.level.length;
+	}
 
 	@Override
 	public boolean draw(DrawingArea a) {

@@ -88,10 +88,10 @@ public class Menu extends BasicDrawable {
 					if(star) {
 					this.menu.load("Menu_star.png");}
 					else {
+						
 						this.menu.load("Menu.png");
+						stars=!stars;
 					}
-					if(stars==true){
-						stars=!stars;}
 				}
 					
 				if (nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_ENTER) {

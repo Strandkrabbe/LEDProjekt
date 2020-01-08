@@ -171,8 +171,10 @@ public class Menu extends BasicDrawable {
 						}
 						break;
 					}
+					if(!star) {
 					Log.info("Game Start:Level " + mapName, "Game");
 					return mapName;
+					}
 				}
 				switch (nk) {
 				case KeyEvent.VK_UP:

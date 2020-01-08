@@ -103,7 +103,6 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level1";
-						return mapName;
 						}
 						break;
 					case 2:
@@ -117,7 +116,6 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level2";
-						return mapName;
 						}
 						break;
 					case 3:
@@ -131,7 +129,6 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level3";
-						return mapName;
 						}
 						break;
 					case 4:
@@ -145,7 +142,6 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level4";
-						return mapName;
 						}
 						break;
 					case 5:
@@ -159,7 +155,6 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level5";
-						return mapName;
 						}
 						break;
 					case 6:
@@ -173,7 +168,6 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level6";
-						return mapName;
 						}
 						break;
 					}

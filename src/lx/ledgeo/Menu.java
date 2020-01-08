@@ -65,7 +65,7 @@ public class Menu extends BasicDrawable {
 			y = 4;
 			break;
 		}
-		if(!stars || !star) {
+		if(!(stars && star)) {
 		a.drawRect(x, y, 5, 5);
 		}
 		return true;

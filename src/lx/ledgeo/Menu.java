@@ -89,7 +89,9 @@ public class Menu extends BasicDrawable {
 					this.menu.load("Menu_star.png");}
 					else {
 						this.menu.load("Menu.png");
+						if(stars == true) {
 						stars=!stars;
+						}
 					}
 				}
 					

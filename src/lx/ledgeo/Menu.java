@@ -103,11 +103,12 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level1";
+						return mapName;
 						}
 						break;
 					case 2:
 						if(star) {
-							if(ScoreManager.getInstance().getStarEarned("Level1")) {
+							if(ScoreManager.getInstance().getStarEarned("Level2")) {
 								this.menu.load("Level2_Star_Got.png");
 							}else
 							{
@@ -116,11 +117,12 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level2";
+						return mapName;
 						}
 						break;
 					case 3:
 						if(star) {
-							if(ScoreManager.getInstance().getStarEarned("Level1")) {
+							if(ScoreManager.getInstance().getStarEarned("Level3")) {
 								this.menu.load("Level3_Star_Got.png");
 							}else
 							{
@@ -129,11 +131,12 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level3";
+						return mapName;
 						}
 						break;
 					case 4:
 						if(star) {
-							if(ScoreManager.getInstance().getStarEarned("Level1")) {
+							if(ScoreManager.getInstance().getStarEarned("Level4")) {
 								this.menu.load("Level4_Star_Got.png");
 							}else
 							{
@@ -142,11 +145,12 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level4";
+						return mapName;
 						}
 						break;
 					case 5:
 						if(star) {
-							if(ScoreManager.getInstance().getStarEarned("Level1")) {
+							if(ScoreManager.getInstance().getStarEarned("Level5")) {
 								this.menu.load("Level5_Star_Got.png");
 							}else
 							{
@@ -155,11 +159,12 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level5";
+						return mapName;
 						}
 						break;
 					case 6:
 						if(star) {
-							if(ScoreManager.getInstance().getStarEarned("Level1")) {
+							if(ScoreManager.getInstance().getStarEarned("Level6")) {
 								this.menu.load("Level6_Star_Got.png");
 							}else
 							{
@@ -168,6 +173,7 @@ public class Menu extends BasicDrawable {
 						}
 						else {
 						mapName = "Level6";
+						return mapName;
 						}
 						break;
 					}

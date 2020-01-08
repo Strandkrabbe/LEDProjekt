@@ -65,7 +65,7 @@ public class Menu extends BasicDrawable {
 			y = 4;
 			break;
 		}
-		if(!stars && !star) {
+		if(!stars || !star) {
 		a.drawRect(x, y, 5, 5);
 		}
 		return true;
@@ -88,7 +88,6 @@ public class Menu extends BasicDrawable {
 					if(star) {
 					this.menu.load("Menu_star.png");}
 					else {
-						
 						this.menu.load("Menu.png");
 						stars=!stars;
 					}

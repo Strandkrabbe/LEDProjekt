@@ -11,7 +11,8 @@ public class Menu extends BasicDrawable {
 	private int auswahlFeld = 1;
 	private Image menu;
 	private InputProvider input;
-	public static boolean star = false;
+	public static boolean star  = false;
+	public static boolean stars =false;
 	public Menu(InputProvider input) {
 		this.input = input;
 		this.menu = new Image();
@@ -64,8 +65,9 @@ public class Menu extends BasicDrawable {
 			y = 4;
 			break;
 		}
-
+		if(!stars && !star) {
 		a.drawRect(x, y, 5, 5);
+		}
 		return true;
 	}
 	
@@ -88,6 +90,8 @@ public class Menu extends BasicDrawable {
 					else {
 						this.menu.load("Menu.png");
 					}
+					if(stars==true){
+						stars=!stars;}
 				}
 					
 				if (nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_ENTER) {
@@ -96,9 +100,11 @@ public class Menu extends BasicDrawable {
 						if(star) {
 							if(ScoreManager.getInstance().getStarEarned("Level1")) {
 								this.menu.load("Level1_Star_Got.png");
+								stars=!stars;
 							}else
 							{
 								this.menu.load("Level1_Star.png");
+								stars=!stars;
 							}
 						}
 						else {
@@ -109,9 +115,11 @@ public class Menu extends BasicDrawable {
 						if(star) {
 							if(ScoreManager.getInstance().getStarEarned("Level2")) {
 								this.menu.load("Level2_Star_Got.png");
+								stars=!stars;
 							}else
 							{
 								this.menu.load("Level2_Star.png");
+								stars=!stars;
 							}
 						}
 						else {
@@ -122,9 +130,11 @@ public class Menu extends BasicDrawable {
 						if(star) {
 							if(ScoreManager.getInstance().getStarEarned("Level3")) {
 								this.menu.load("Level3_Star_Got.png");
+								stars=!stars;
 							}else
 							{
 								this.menu.load("Level3_Star.png");
+								stars=!stars;
 							}
 						}
 						else {
@@ -135,9 +145,11 @@ public class Menu extends BasicDrawable {
 						if(star) {
 							if(ScoreManager.getInstance().getStarEarned("Level4")) {
 								this.menu.load("Level4_Star_Got.png");
+								stars=!stars;
 							}else
 							{
 								this.menu.load("Level4_Star.png");
+								stars=!stars;
 							}
 						}
 						else {
@@ -148,9 +160,11 @@ public class Menu extends BasicDrawable {
 						if(star) {
 							if(ScoreManager.getInstance().getStarEarned("Level5")) {
 								this.menu.load("Level5_Star_Got.png");
+								stars=!stars;
 							}else
 							{
 								this.menu.load("Level5_Star.png");
+								stars=!stars;
 							}
 						}
 						else {
@@ -161,9 +175,11 @@ public class Menu extends BasicDrawable {
 						if(star) {
 							if(ScoreManager.getInstance().getStarEarned("Level6")) {
 								this.menu.load("Level6_Star_Got.png");
+								stars=!stars;
 							}else
 							{
 								this.menu.load("Level6_Star.png");
+								stars=!stars;
 							}
 						}
 						else {

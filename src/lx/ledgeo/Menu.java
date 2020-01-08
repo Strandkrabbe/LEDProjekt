@@ -12,7 +12,6 @@ public class Menu extends BasicDrawable {
 	private Image menu;
 	private InputProvider input;
 	public static boolean star = false;
-	
 	public Menu(InputProvider input) {
 		this.input = input;
 		this.menu = new Image();
@@ -32,26 +31,6 @@ public class Menu extends BasicDrawable {
 			return false;
 		}
 		int[] Cursor = new int[] { 0, 255, 255 };
-		if(star){
-			this.menu = new Image();
-			this.menu.load("Menu_star.png");
-			this.menu.setVisible(true);
-			this.menu.setPosition(0, 0);
-			this.menu.setSize(18, 10);
-			this.setPosition(0, 0);
-			this.setSize(18, 10);
-			this.setVisible(false);
-		}
-		else{
-			this.menu = new Image();
-			this.menu.load("Menu.png");
-			this.menu.setVisible(true);
-			this.menu.setPosition(0, 0);
-			this.menu.setSize(18, 10);
-			this.setPosition(0, 0);
-			this.setSize(18, 10);
-			this.setVisible(false);
-		}
 		a.draw(menu);
 		a.setColor(Cursor);
 		int x = 2;
@@ -101,18 +80,25 @@ public class Menu extends BasicDrawable {
 				if (nk == KeyEvent.VK_ESCAPE) {
 					Log.info("Game stopped: ESC", "Menu");
 					return null;
-				}				
+				}
+				if (nk == KeyEvent.VK_R) {
+					star=!star;
+					if(star) {
+					this.menu.load("Menu_star.png");}
+					else {
+						this.menu.load("Menu.png");
+					}
+				}
+					
 				if (nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_ENTER) {
 					switch (auswahlFeld) {
 					case 1:
 						if(star) {
 							if(ScoreManager.getInstance().getStarEarned("Level1")) {
-								mapName ="Level1_Star_Got.png";
-								return mapName;
+								this.menu.load("Level1_Star_Got.png");
 							}else
 							{
-								mapName ="Level1_Star.png";
-								return mapName;
+								this.menu.load("Level1_Star.png");
 							}
 						}
 						else {
@@ -122,26 +108,23 @@ public class Menu extends BasicDrawable {
 					case 2:
 						if(star) {
 							if(ScoreManager.getInstance().getStarEarned("Level1")) {
-								mapName ="Level1_Star_Got.png";
-								return mapName;
+								this.menu.load("Level2_Star_Got.png");
 							}else
 							{
-								mapName ="Level1_Star.png";
-								return mapName;
+								this.menu.load("Level2_Star.png");
 							}
 						}
 						else {
-						mapName = "Level1";
+						mapName = "Level2";
 						}
 						break;
 					case 3:
 						if(star) {
-							if(ScoreManager.getInstance().getStarEarned("Level3")) {
-								mapName ="Level3_Star_Got.png";
-								return mapName;
+							if(ScoreManager.getInstance().getStarEarned("Level1")) {
+								this.menu.load("Level3_Star_Got.png");
 							}else
 							{
-								
+								this.menu.load("Level3_Star.png");
 							}
 						}
 						else {
@@ -150,12 +133,11 @@ public class Menu extends BasicDrawable {
 						break;
 					case 4:
 						if(star) {
-							if(ScoreManager.getInstance().getStarEarned("Level4")) {
-								mapName ="Level4_Star_Got.png";
-								return mapName;
+							if(ScoreManager.getInstance().getStarEarned("Level1")) {
+								this.menu.load("Level4_Star_Got.png");
 							}else
 							{
-								
+								this.menu.load("Level4_Star.png");
 							}
 						}
 						else {
@@ -164,12 +146,11 @@ public class Menu extends BasicDrawable {
 						break;
 					case 5:
 						if(star) {
-							if(ScoreManager.getInstance().getStarEarned("Level5")) {
-								mapName ="Level5_Star_Got.png";
-								return mapName;
+							if(ScoreManager.getInstance().getStarEarned("Level1")) {
+								this.menu.load("Level5_Star_Got.png");
 							}else
 							{
-								
+								this.menu.load("Level5_Star.png");
 							}
 						}
 						else {
@@ -178,12 +159,11 @@ public class Menu extends BasicDrawable {
 						break;
 					case 6:
 						if(star) {
-							if(ScoreManager.getInstance().getStarEarned("Level6")) {
-								mapName ="Level6_Star_Got.png";
-								return mapName;
+							if(ScoreManager.getInstance().getStarEarned("Level1")) {
+								this.menu.load("Level6_Star_Got.png");
 							}else
 							{
-								
+								this.menu.load("Level6_Star.png");
 							}
 						}
 						else {
@@ -193,9 +173,6 @@ public class Menu extends BasicDrawable {
 					}
 					Log.info("Game Start:Level " + mapName, "Game");
 					return mapName;
-				}
-				if (nk == KeyEvent.VK_R) {	
-					star=!star;
 				}
 				switch (nk) {
 				case KeyEvent.VK_UP:

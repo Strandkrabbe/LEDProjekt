@@ -24,16 +24,7 @@ public class Menu extends BasicDrawable {
 		this.setSize(18, 10);
 		this.setVisible(false);
 	}
-	public Menu(String name) {
-		this.menu = new Image();
-		this.menu.load(name);
-		this.menu.setVisible(true);
-		this.menu.setPosition(0, 0);
-		this.menu.setSize(18, 10);
-		this.setPosition(0, 0);
-		this.setSize(18, 10);
-		this.setVisible(false);
-	}
+		
 
 	@Override
 	public boolean draw(DrawingArea a) {
@@ -42,10 +33,24 @@ public class Menu extends BasicDrawable {
 		}
 		int[] Cursor = new int[] { 0, 255, 255 };
 		if(star){
-			Menu("Menu_star.png");
+			this.menu = new Image();
+			this.menu.load("Menu_star.png");
+			this.menu.setVisible(true);
+			this.menu.setPosition(0, 0);
+			this.menu.setSize(18, 10);
+			this.setPosition(0, 0);
+			this.setSize(18, 10);
+			this.setVisible(false);
 		}
 		else{
-			Menu("Menu.png");
+			this.menu = new Image();
+			this.menu.load("Menu.png");
+			this.menu.setVisible(true);
+			this.menu.setPosition(0, 0);
+			this.menu.setSize(18, 10);
+			this.setPosition(0, 0);
+			this.setSize(18, 10);
+			this.setVisible(false);
 		}
 		a.draw(menu);
 		a.setColor(Cursor);
@@ -84,11 +89,7 @@ public class Menu extends BasicDrawable {
 		a.drawRect(x, y, 5, 5);
 		return true;
 	}
-
-	private void Menu(String string) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	public String levelAuswahl() {
 		auswahlFeld = 1;
 		String mapName = "Level 1";
@@ -110,7 +111,8 @@ public class Menu extends BasicDrawable {
 								return mapName;
 							}else
 							{
-								
+								mapName ="Level1_Star.png";
+								return mapName;
 							}
 						}
 						else {
@@ -119,16 +121,17 @@ public class Menu extends BasicDrawable {
 						break;
 					case 2:
 						if(star) {
-							if(ScoreManager.getInstance().getStarEarned("Level2")) {
-								mapName ="Level2_Star_Got.png";
+							if(ScoreManager.getInstance().getStarEarned("Level1")) {
+								mapName ="Level1_Star_Got.png";
 								return mapName;
 							}else
 							{
-								
+								mapName ="Level1_Star.png";
+								return mapName;
 							}
 						}
 						else {
-						mapName = "Level2";
+						mapName = "Level1";
 						}
 						break;
 					case 3:

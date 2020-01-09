@@ -65,6 +65,7 @@ public class ScoreManager {
 		}
 	}
 	public void setMapProgress(String mapName,float propgress)		{
+		Log.debug("Saving progress " + propgress + " for " + mapName, "ScoreManager");
 		String propID = this.getMapID(mapName);
 		this.properties.setProperty(propID, String.valueOf(propgress));
 		try {

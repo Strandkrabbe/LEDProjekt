@@ -173,6 +173,10 @@ public class Map extends BasicDrawable {
 		this.currentYPos = currentYPos;
 	}
 	
+	public String getName()	{
+		return this.mapName;
+	}
+	
 //	private boolean isCollectingStar()	{
 //		
 //	}

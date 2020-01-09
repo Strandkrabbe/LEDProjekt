@@ -1,6 +1,8 @@
 package lx.ledgeo;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+
 import henning.leddriverj.util.Log;
 import lx.ledgeo.draw.BasicDrawable;
 import lx.ledgeo.draw.DrawingArea;
@@ -94,6 +96,13 @@ public class Menu extends BasicDrawable {
 						}
 					}
 				}
+				if (nk == KeyEvent.VK_DELETE)
+					try {
+						ScoreManager.getInstance().reset();
+						Log.info("Scores reseted!");
+					} catch (IOException e1) {
+						Log.error(e1);
+					}
 					
 				if (nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_ENTER) {
 					switch (auswahlFeld) {

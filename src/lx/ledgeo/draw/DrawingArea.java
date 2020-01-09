@@ -34,13 +34,15 @@ public class DrawingArea {
 	}
 	public void drawLine(int x1,int y1,int x2,int y2)	{
 		int steps = Math.max(x2 - x1, y2 - y1);
+		this.set(x1, y1);
+		if (steps == 0)
+			return;
 		double stepY = (y2-y1)/steps;
 		double stepX = (x2-x1)/steps;
 		double cx = x1 + stepX;
-		double cy = y2 + stepY;
-		this.set(x1, y1);
+		double cy = y1 + stepY;
 		for (int C = 0;C < steps;C++)	{
-			this.set(round(cy),round(cx));
+			this.set(round(cx),round(cy));
 			cx += stepX;
 			cy += stepY;
 		}

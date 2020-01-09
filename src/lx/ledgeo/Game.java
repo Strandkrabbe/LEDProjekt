@@ -26,6 +26,10 @@ public class Game extends Container {
 	public static final byte RETURN_RUN = 0;
 	public static final byte RETURN_DEAD = 1;
 	public static final byte RETURN_FINISH = 2;
+	
+	private static final int[] PROGRESSBAR_BACK = {70,70,70};
+	private static final int[] PROGRESSBAR_CURRENT = {0,255,0};
+	private static final int[] PROGRESSBAR_HIGHSCORE = {0,255,255};
 
 	private Player player;
 	private Map map;
@@ -227,6 +231,7 @@ public class Game extends Container {
 			this.bigJump();
 			this.changeGravity();
 			this.changeSize();
+			this.collectStar();
 			if (isDead(exactPlayerX, exactPlayerY)) {
 				return RETURN_DEAD;
 			}
@@ -277,6 +282,13 @@ public class Game extends Container {
 		}
 	}
 	
+	private void collectStar()	{
+		if (this.isInBlock(-5))	{
+			Log.info("Collected star for " + this.map.getName(),"Game");
+			ScoreManager.getInstance().setStarEarned(this.map.getName(), true);
+		}
+	}
+	
 	private boolean isOnBlock(int type)	{
 		int X = xToInt(exactPlayerX);
 		int Y = yToInt(exactPlayerY);
@@ -313,13 +325,19 @@ public class Game extends Container {
 			this.player.setPosition(X - this.map.getCurrentXPos(), Y - map.getCurrentYPos());
 			if (background != null)
 				this.background.setMapPosition(((double) X) / (this.map.getFinishX() + 1));
-			int[] fortschritt = new int[] { 255, 255, 255 };
-			a.setColor(fortschritt);
-			a.drawLine(0, 0,  0, (int)(exactPlayerX/map.getFinishX())*10);
 		}
 		boolean vis = super.draw(a);
 		if (!vis)
 			return false;
+		a.setColor(PROGRESSBAR_BACK);
+		a.drawLine(0, 0, 0, 9);
+		double highscore = ScoreManager.getInstance().getMapProgress(this.map.getName());
+		a.setColor(PROGRESSBAR_HIGHSCORE);
+		a.drawLine(0, 0, 0,(int) (highscore*10));
+		a.setColor(PROGRESSBAR_CURRENT);
+		int upperEnd = (int)(exactPlayerX*10/map.getFinishX()) - 1;
+		if (upperEnd >= 0)
+			a.drawLine(0, 0,  0, upperEnd);
 		int[][][] buffer = ArrayUtils.copy3(a.getArea());
 		a.drawInverse(buffer);
 		if (this.endscreenLose.isVisible())
@@ -398,6 +416,10 @@ public class Game extends Container {
 				this.running = false;
 			}
 		}
+		float score = (float) (this.exactPlayerX/this.map.getFinishX());
+		float lastScore = ScoreManager.getInstance().getMapProgress(mapName);
+		if (score > lastScore)
+			ScoreManager.getInstance().setMapProgress(mapName, score);
 		this.setVisible(false);
 		if (restart)
 			this.start(mapName, skin, this.input);

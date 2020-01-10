@@ -6,7 +6,7 @@ import java.util.List;
 public class Skin {
 	
 	public static final int[] COLOR_BLUE = {0,0,255};
-	public static final int[] COLOR_LIGHTBLUE = {80,120,255};
+	public static final int[] COLOR_LIGHTBLUE = {10,10,255};
 	public static final int[] COLOR_GREEN = {80,255,160};
 	public static final int[] COLOR_ORANGE = {255,210,0};
 	

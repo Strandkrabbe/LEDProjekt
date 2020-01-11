@@ -21,7 +21,7 @@ public class Map extends BasicDrawable {
 	private int[] color_invalid_solid = { 255, 0, 255};
 	private int[] color_spike = { 255, 0, 0 };
 	private int[] color_playerblock = { 0, 0, 255 }; // Was is das??
-	private int[] color_jump = { 255, 225, 0 };
+	private int[] color_jump = { 255, 255, 0 };
 	private int[] color_scale1 = { 10, 250, 180 };
 	private int[] color_scale2 = { 10, 250, 180 };
 	private int[] color_scale3 = { 10, 250, 180 };

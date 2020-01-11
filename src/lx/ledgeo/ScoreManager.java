@@ -48,6 +48,9 @@ public class ScoreManager {
 	private String getMapID(String mapName)	{
 		return "score_" + mapName;
 	}
+	private String getStarID(String mapName)	{
+		return "star_" + mapName;
+	}
 	
 	public float getMapProgress(String mapName)	{
 		String propID = this.getMapID(mapName);
@@ -77,7 +80,7 @@ public class ScoreManager {
 	}
 	
 	public boolean getStarEarned(String mapName)	{
-		String propID = this.getMapID(mapName);
+		String propID = this.getStarID(mapName);
 		String value = this.properties.getProperty(propID);
 		if (value == null)	{
 			this.properties.setProperty(propID, "0");
@@ -86,7 +89,7 @@ public class ScoreManager {
 		return value.equals("1");
 	}
 	public void setStarEarned(String mapName,boolean e)	{
-		String propID = this.getMapID(mapName);
+		String propID = this.getStarID(mapName);
 		this.properties.setProperty(propID, e ? "1" : "0");
 		try {
 			this.save();

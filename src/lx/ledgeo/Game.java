@@ -222,6 +222,7 @@ public class Game extends Container {
 	 * @return true if successful, false if dead
 	 */
 	public byte move() {
+		int p1 = xToInt(exactPlayerX);
 		if (!onGround(exactPlayerX, exactPlayerY)) {
 			this.velocityY += this.gravity;
 		}
@@ -279,6 +280,8 @@ public class Game extends Container {
 		this.applyVelocityChanges();
 		if (this.gc != null)
 			this.gc.apply(xToInt(exactPlayerX));
+		if (xToInt(exactPlayerX) != p1 && p1%10 == 0)
+			Log.debug("Current Position:" + p1, "Game");
 		return RETURN_RUN;
 	}
 
@@ -444,6 +447,7 @@ public class Game extends Container {
 				this.running = false;
 			}
 		}
+		Log.debug("Game end pos:" + this.exactPlayerX, "Game");
 		float score = (float) (this.exactPlayerX/this.map.getFinishX());
 		float lastScore = ScoreManager.getInstance().getMapProgress(mapName);
 		if (score > lastScore)
@@ -627,6 +631,9 @@ public class Game extends Container {
 					break;
 				case "skin":
 					player.setSkin(Skin.getByName(this.value));
+					break;
+				case "velx":
+					velocityX = this.asFloat();
 					break;
 				default:
 					throw new IllegalArgumentException();

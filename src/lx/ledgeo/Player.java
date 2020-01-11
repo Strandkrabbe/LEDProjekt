@@ -25,7 +25,7 @@ public class Player extends BasicDrawable {
 	public void setSkin(Skin s)	{
 		this.skin = s;
 	}
-	public Skin getSkin()	{
+	public synchronized Skin getSkin()	{
 		return this.skin;
 	}
 	
@@ -39,7 +39,7 @@ public class Player extends BasicDrawable {
 	}
 	
 	@Override
-	public boolean draw(DrawingArea a) {
+	public synchronized boolean draw(DrawingArea a) {
 		if (!super.draw(a))
 			return false;
 		a.draw(skin.getAnimatedSkin(), 0, 0);

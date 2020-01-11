@@ -1,6 +1,14 @@
 package lx.ledgeo;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
+import java.util.List;
 
 import henning.leddriverj.util.Log;
 import lx.ledgeo.draw.Container;
@@ -8,7 +16,11 @@ import lx.ledgeo.draw.DrawingArea;
 import lx.ledgeo.draw.Image;
 import lx.ledgeo.input.InputProvider;
 import lx.ledgeo.util.ArrayUtils;
+import lx.ledgeo.util.ColorUtils;
 
+import static lx.ledgeo.ActionTypes.*;
+
+@SuppressWarnings("unused")
 public class Game extends Container {
 	// integrate (-bx + a) from 0 to 32 = 0.25 and integrate (-bx + a) from 0 to 16 = 4.1
 	// integrate (-0.0341797x + a) from 0 to 16 = 5.5 
@@ -34,6 +46,7 @@ public class Game extends Container {
 	private Player player;
 	private Map map;
 	private Background background;
+	private GameConfig gc;
 	private double exactPlayerX; // scale: [pixel] // player draw pos ceil/floor? // Set at reset
 	private double exactPlayerY;
 	private double velocityX; // scale: [pixel/tick] // Has to be below (or equal to) 1!!
@@ -82,6 +95,13 @@ public class Game extends Container {
 	public void loadMap(String s) {
 		if (!running) {
 			this.map.loadMap(s);
+			this.gc = new GameConfig();
+			try {
+				this.gc.load(s);
+			} catch (IOException e) {
+				Log.error("Failed to load config for " + s, "Game");
+				Log.error(e);
+			}
 			if (background != null)
 				this.remove(this.background);
 //			int[] bgcolor = ColorUtils.invert(this.player.getSkin().getMainColor());
@@ -102,7 +122,6 @@ public class Game extends Container {
 		return gravity < 0 ? (int) y : ((int) Math.ceil(y));
 	}
 
-	@SuppressWarnings("unused")
 	private int xToInt(double x, boolean up) {
 		if (up) {
 			return (int) Math.ceil(x);
@@ -111,7 +130,6 @@ public class Game extends Container {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private int yToInt(double y, boolean up) {
 		if (up) {
 			return (int) Math.ceil(y);
@@ -157,8 +175,7 @@ public class Game extends Container {
 
 	boolean isFinished(double x, double y) {
 		int PX = xToInt(exactPlayerX) + this.player.getScale() - 1;
-		int PY = yToInt(exactPlayerY);
-		return PX >= this.map.getFinishX() || this.map.getLevel(PX, PY) == Integer.MIN_VALUE;
+		return PX >= this.map.getFinishX() || this.isToutchingBlock(Integer.MIN_VALUE);
 	}
 
 	void bigJump() {
@@ -260,6 +277,8 @@ public class Game extends Container {
 									// dividing it up for every step in
 									// y calculation
 		this.applyVelocityChanges();
+		if (this.gc != null)
+			this.gc.apply(xToInt(exactPlayerX));
 		return RETURN_RUN;
 	}
 
@@ -286,6 +305,15 @@ public class Game extends Container {
 		if (this.isInBlock(-5))	{
 			Log.info("Collected star for " + this.map.getName(),"Game");
 			ScoreManager.getInstance().setStarEarned(this.map.getName(), true);
+			int x = this.xToInt(exactPlayerX);
+			int y = this.yToInt(exactPlayerY);
+			for (int YA = 0;YA < this.player.getScale();YA++)	{
+				for (int XA = 0;XA < this.player.getScale();XA++)	{
+					if (this.map.getLevel(x + XA, y + YA) == -5)	{
+						this.map.setStarDone(x + XA, y + YA);
+					}
+				}
+			}
 		}
 	}
 	
@@ -443,6 +471,171 @@ public class Game extends Container {
 			}
 			Thread.sleep(TICK_DURATION);
 		} while (true);
+	}
+	
+	// Load game cnf files for color and skin changes
+	private class GameConfig	{
+		
+		private List<ActionList> lists;
+		
+		public GameConfig()	{
+			this.lists = new LinkedList<>();
+		}
+		
+		public void load(String mapName) throws IOException	{
+			this.lists.clear();
+			InputStream i = this.getClass().getResourceAsStream("/lx/ledgeo/maps/" + mapName + ".cnf");
+			if (i == null)
+				return;
+			BufferedReader reader = new BufferedReader(new InputStreamReader(i, StandardCharsets.UTF_8));
+			ActionList last = null;
+			String line;
+			while ((line = reader.readLine()) != null)	{
+				if (line.isBlank())
+					continue;
+				if (line.startsWith(" "))	{
+					line = line.substring(1);
+					if (last != null)	{
+						ActionTypes type;
+						if (line.startsWith("+"))	{
+							line = line.substring(1);
+							type = ADD;
+						}	else if (line.startsWith("="))	{
+							line = line.substring(1);
+							type = SET;
+						}	else	{
+							type = SET;
+						}
+						int equalsIndex = line.indexOf("=");
+						String field = line.substring(0, equalsIndex);
+						String value = line.substring(equalsIndex + 1);
+						last.add(new ActionEntry(field, type, value));
+					}	else	{
+						Log.warn("Failed to read config line: entry before declaration of list", "GC");
+					}
+				}	else if (line.startsWith(":"))	{
+					try	{
+						line = line.substring(1);
+						int toIndex = line.indexOf("-");
+						if (toIndex < 0)	{
+							int x = Integer.valueOf(line);
+							last = new ActionList(x, x);
+							this.lists.add(last);
+						}	else	{
+							int x1 = Integer.valueOf(line.substring(0,toIndex));
+							int x2 = Integer.valueOf(line.substring(toIndex + 1));
+							last = new ActionList(x1, x2);
+							this.lists.add(last);
+						}
+					}	catch (IllegalArgumentException ex)	{
+						Log.warn("Invalid list declaration" + line, "GC");
+					}
+				}
+			}
+			reader.close();
+		}
+		
+		public void apply(int x)	{
+			for (ActionList al : this.lists)	{
+				al.apply(x);
+			}
+		}
+		
+	}
+	private class ActionList	{
+		
+		public final int xstart;
+		public final int xend;
+		public final List<ActionEntry> actions;
+		
+		public ActionList(int x1,int x2)	{
+			this.xstart = x1;
+			this.xend = x2;
+			this.actions = new LinkedList<Game.ActionEntry>();
+		}
+		
+		public void add(ActionEntry e)	{
+			this.actions.add(e);
+		}
+		public boolean apply(int x)	{
+			if (x >= xstart && x <= xend)	{
+				for (ActionEntry e : this.actions)	{
+					e.apply();
+				}
+				return true;
+			}
+			return false;
+		}
+		
+	}
+	private class ActionEntry	{
+		public final String fieldName;
+		public final ActionTypes type;
+		public final String value;
+		
+		public ActionEntry(String fname,ActionTypes type,String value)	{
+			this.fieldName = fname;
+			this.type = type;
+			this.value = value;
+		}
+		
+		public int[] asColor()	throws IllegalArgumentException	{
+			String[] vs = this.value.split(",");
+			if (vs.length < 3)
+				return null;
+			int[] i = new int[3];
+			i[0] = Integer.valueOf(vs[0]);
+			i[1] = Integer.valueOf(vs[1]);
+			i[2] = Integer.valueOf(vs[2]);
+			return i;
+		}
+		public int asInt()	throws IllegalArgumentException {
+			return Integer.valueOf(this.value);
+		}
+		public float asFloat()	throws IllegalArgumentException	{
+			return Float.valueOf(this.value);
+		}
+		
+		public void apply()	{
+			try	{
+				switch (this.fieldName) {
+				case "bg":
+					if (background instanceof ColorBackground)
+						if (type == ADD)	{
+							ColorBackground cbg = ((ColorBackground)background);
+							cbg.setBaseColor(ColorUtils.add(cbg.getBaseColor(), this.asColor()));
+						}	else
+							((ColorBackground)background).setBaseColor(this.asColor());
+					break;
+				case "csolid":
+					if (type == ADD)
+						ColorUtils.add(map.color_solid, this.asColor());
+					else
+						map.color_solid = this.asColor();
+					break;
+				case "cspike":
+					if (type == ADD)
+						ColorUtils.add(map.color_spike, this.asColor());
+					else
+						map.color_spike = this.asColor();
+					break;
+				case "cdeco":
+					if (type == ADD)
+						ColorUtils.add(map.color_deco, this.asColor());
+					else
+						map.color_deco = this.asColor();
+					break;
+				case "skin":
+					player.setSkin(Skin.getByName(this.value));
+					break;
+				default:
+					throw new IllegalArgumentException();
+				}
+			}	catch (IllegalArgumentException ex)	{
+				Log.error("Invalid value or field " + this.fieldName + ":" + this.value, "GC");
+				Log.error(ex);
+			}
+		}
 	}
 
 }

@@ -17,17 +17,19 @@ public class Map extends BasicDrawable {
 	private Image noMapImg;
 	private String mapName = "*";
 
-	private int[] color_solid = { 0, 255, 0 };
-	private int[] color_invalid_solid = { 255, 0, 255};
-	private int[] color_spike = { 255, 0, 0 };
-	private int[] color_playerblock = { 0, 0, 255 }; // Was is das??
-	private int[] color_jump = { 255, 255, 0 };
-	private int[] color_scale1 = { 10, 250, 180 };
-	private int[] color_scale2 = { 10, 250, 180 };
-	private int[] color_scale3 = { 10, 250, 180 };
-	private int[] color_star = { 255,179 , 0 };
-	private int[] color_deco = { 255,0 ,0 };
-	private int[] color_gravity = {255,0,255};
+	// Do not do declerations here!!
+	// Do so in loadMap!!
+	int[] color_solid;
+	int[] color_invalid_solid;
+	int[] color_spike;
+	int[] color_playerblock;
+	int[] color_jump;
+	int[] color_scale1;
+	int[] color_scale2;
+	int[] color_scale3;
+	int[] color_star;
+	int[] color_deco;
+	int[] color_gravity;
 
 	private int[] color_finish = { 255, 255, 255 };
 
@@ -44,6 +46,17 @@ public class Map extends BasicDrawable {
 	}
 
 	public void loadMap(String name) {
+		color_solid = new int[] { 0, 255, 0 };
+		color_invalid_solid = new int[] { 255, 0, 255};
+		color_spike = new int[] { 255, 0, 0 };
+		color_playerblock = new int[] { 0, 0, 255 }; // Was is das??
+		color_jump = new int[] { 255, 255, 0 };
+		color_scale1 = new int[] { 10, 250, 230 };
+		color_scale2 = new int[] { 10, 250, 230 };
+		color_scale3 = new int[] { 10, 250, 230 };
+		color_star = new int[] { 255,179 , 0 };
+		color_deco = new int[] { 255,0 ,0 };
+		color_gravity = new int[] {255,0,255};
 		this.mapName = name;
 		try {
 			this.level = MapUtil.loadMap(name);

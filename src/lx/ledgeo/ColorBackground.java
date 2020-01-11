@@ -70,5 +70,11 @@ public class ColorBackground extends Background {
 		}
 		return true;
 	}
+	public synchronized void setBaseColor(int[] color)	{
+		this.base_color = color;
+	}
+	public synchronized int[] getBaseColor()	{
+		return this.base_color;
+	}
 
 }

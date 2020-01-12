@@ -62,7 +62,7 @@ public class Image extends BasicDrawable {
 			return false;
 		}
 		if (rgb == null)	{
-			a.setColor(new int[] {255,255,0});
+			a.setColor(new int[] {255,0,255});
 			for (int Y = 0;Y < this.getHeight();Y++)	{
 				for (int X = 0;X < this.getWidth();X++)	{
 					if (Y%2 == X%2)	{

@@ -3,20 +3,20 @@ package lx.ledgeo;
 import java.io.IOException;
 import henning.leddriverj.BoardController;
 import henning.leddriverj.LEDController;
+import henning.leddriverj.input.InputProvider;
 import lx.ledgeo.draw.RootContainer;
-import lx.ledgeo.input.InputProvider;
-import lx.ledgeo.input.KeyInputFrame;
 
 public class Main {
 
 	private static RootContainer root;
+	private static InputProvider input;
 
 	public static void main(String[] args) throws IOException {
-		InputProvider input = new KeyInputFrame();
 		try	{
 			root = new RootContainer(18, 10);
 			root.setPosition(0, 0);
 			BoardController board = root.getBoard();
+			input = board.getInputProvider();
 			board.reset();
 			LEDController ctl = board.getController();
 			ctl.setAlpha(3);

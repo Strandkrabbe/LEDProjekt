@@ -3,11 +3,11 @@ package lx.ledgeo;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
+import henning.leddriverj.input.InputProvider;
 import henning.leddriverj.util.Log;
 import lx.ledgeo.draw.BasicDrawable;
 import lx.ledgeo.draw.DrawingArea;
 import lx.ledgeo.draw.Image;
-import lx.ledgeo.input.InputProvider;
 
 public class Menu extends BasicDrawable {
 	private int auswahlFeld = 1;
@@ -88,7 +88,7 @@ public class Menu extends BasicDrawable {
 				if (nk == KeyEvent.VK_R) {
 					star=!star;
 					if(star) {
-					this.menu.load("Menu_star.png");}
+					this.menu.load("Menu_Star.png");}
 					else {
 						this.menu.load("Menu.png");
 						if(stars == true) {

@@ -10,11 +10,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
+import henning.leddriverj.input.InputProvider;
 import henning.leddriverj.util.Log;
 import lx.ledgeo.draw.Container;
 import lx.ledgeo.draw.DrawingArea;
 import lx.ledgeo.draw.Image;
-import lx.ledgeo.input.InputProvider;
 import lx.ledgeo.util.ArrayUtils;
 import lx.ledgeo.util.ColorUtils;
 
@@ -401,6 +401,8 @@ public class Game extends Container {
 		this.player.setVisible(true);
 		boolean restart = false;
 		while (running) {
+			if (this.input.getOptionalKeyPressed(KeyEvent.VK_SPACE) || this.input.getOptionalKeyPressed(KeyEvent.VK_UP) || this.input.getOptionalKeyPressed(KeyEvent.VK_W))
+				this.jump();
 			while (this.input.hasKey()) {
 				int nk = this.input.getLastKey();
 				if (nk == KeyEvent.VK_UP || nk == KeyEvent.VK_SPACE || nk == KeyEvent.VK_W) {

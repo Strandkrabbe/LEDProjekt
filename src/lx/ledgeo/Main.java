@@ -3,8 +3,8 @@ package lx.ledgeo;
 import java.io.IOException;
 import henning.leddriverj.BoardController;
 import henning.leddriverj.LEDController;
+import henning.leddriverj.draw.RootContainer;
 import henning.leddriverj.input.InputProvider;
-import lx.ledgeo.draw.RootContainer;
 
 public class Main {
 

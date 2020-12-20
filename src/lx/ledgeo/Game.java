@@ -10,13 +10,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
+import henning.leddriverj.draw.Container;
+import henning.leddriverj.draw.DrawingArea;
+import henning.leddriverj.draw.Image;
 import henning.leddriverj.input.InputProvider;
+import henning.leddriverj.util.ArrayUtils;
+import henning.leddriverj.util.ColorUtils;
 import henning.leddriverj.util.Log;
-import lx.ledgeo.draw.Container;
-import lx.ledgeo.draw.DrawingArea;
-import lx.ledgeo.draw.Image;
-import lx.ledgeo.util.ArrayUtils;
-import lx.ledgeo.util.ColorUtils;
 
 import static lx.ledgeo.ActionTypes.*;
 

@@ -1,7 +1,8 @@
 package lx.ledgeo;
 
 import java.util.Random;
-import lx.ledgeo.draw.DrawingArea;
+
+import henning.leddriverj.draw.DrawingArea;
 
 public class ColorBackground extends Background {
 

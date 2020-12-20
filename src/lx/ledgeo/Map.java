@@ -1,11 +1,12 @@
 package lx.ledgeo;
 
 import java.io.IOException;
+
+import henning.leddriverj.draw.BasicDrawable;
+import henning.leddriverj.draw.ColorMode;
+import henning.leddriverj.draw.DrawingArea;
+import henning.leddriverj.draw.Image;
 import henning.leddriverj.util.Log;
-import lx.ledgeo.draw.BasicDrawable;
-import lx.ledgeo.draw.ColorMode;
-import lx.ledgeo.draw.DrawingArea;
-import lx.ledgeo.draw.Image;
 import lx.ledgeo.util.MapUtil;
 
 public class Map extends BasicDrawable {

@@ -1,7 +1,7 @@
 package lx.ledgeo;
 
-import lx.ledgeo.draw.BasicDrawable;
-import lx.ledgeo.draw.DrawingArea;
+import henning.leddriverj.draw.BasicDrawable;
+import henning.leddriverj.draw.DrawingArea;
 
 public class Player extends BasicDrawable {
 

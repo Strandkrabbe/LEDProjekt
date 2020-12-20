@@ -3,11 +3,12 @@ package lx.ledgeo;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
+import henning.leddriverj.draw.BasicDrawable;
+import henning.leddriverj.draw.DrawingArea;
+import henning.leddriverj.draw.Image;
 import henning.leddriverj.input.InputProvider;
 import henning.leddriverj.util.Log;
-import lx.ledgeo.draw.BasicDrawable;
-import lx.ledgeo.draw.DrawingArea;
-import lx.ledgeo.draw.Image;
+
 
 public class Menu extends BasicDrawable {
 	private int auswahlFeld = 1;

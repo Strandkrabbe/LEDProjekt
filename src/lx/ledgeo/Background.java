@@ -1,7 +1,7 @@
 package lx.ledgeo;
 
-import lx.ledgeo.draw.BasicDrawable;
-import lx.ledgeo.draw.ColorMode;
+import henning.leddriverj.draw.BasicDrawable;
+import henning.leddriverj.draw.ColorMode;
 
 public abstract class Background extends BasicDrawable {
 

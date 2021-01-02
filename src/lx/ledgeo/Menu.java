@@ -27,7 +27,6 @@ public class Menu extends BasicDrawable {
 		this.setSize(18, 10);
 		this.setVisible(false);
 	}
-		
 
 	@Override
 	public boolean draw(DrawingArea a) {

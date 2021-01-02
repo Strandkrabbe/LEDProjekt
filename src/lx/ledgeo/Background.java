@@ -9,7 +9,7 @@ public abstract class Background extends BasicDrawable {
 		this.setPosition(0, 0);
 		this.setSize(Game.GAME_WIDTH, Game.GAME_HEIGHT);
 		this.setVisible(true);
-		this.setBackgrounColor(null);
+		this.setBackgroundColor(null);
 	}
 
 	@Override
